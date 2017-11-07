@@ -1,0 +1,10 @@
+.idea/
+logs/
+project/
+target/
+*~
+*.log
+*.class
+.*
+*.iml
+*#
