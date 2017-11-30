@@ -1,4 +1,4 @@
-package com.github.jccode.springbootrestdemo;
+package com.github.jccode.springbootrestdemo.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
