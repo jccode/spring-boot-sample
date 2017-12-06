@@ -1,5 +1,8 @@
 package com.github.jccode.springbootrestdemo.controller;
 
+import com.github.jccode.springbootrestdemo.common.data.RestResult;
+import com.github.jccode.springbootrestdemo.common.data.Success;
+import com.github.jccode.springbootrestdemo.exception.RestException;
 import com.github.jccode.springbootrestdemo.model.User;
 import com.github.jccode.springbootrestdemo.service.UserService;
 import com.google.common.base.Preconditions;
@@ -17,12 +20,13 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public User find(@PathVariable String name) {
+    public RestResult<User> find(@PathVariable String name) {
         Preconditions.checkNotNull(name);
         User user = userService.find(name);
         if (user == null) {
             // throw exception
+            throw new RestException("user not exist");
         }
-        return user;
+        return new Success(user);
     }
 }
