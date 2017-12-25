@@ -4,8 +4,11 @@ import com.github.jccode.springbootrestintegrateddemo.model.User;
 import com.github.jccode.springbootrestintegrateddemo.model.UserCriteria;
 import com.github.jccode.springbootsample.core.dao.CrudMapper;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface UserMapper extends com.github.jccode.springbootsample.core.dao.CrudMapper<User> {
     long countByExample(UserCriteria example);
 

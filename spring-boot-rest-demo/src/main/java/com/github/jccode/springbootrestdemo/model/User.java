@@ -2,6 +2,7 @@ package com.github.jccode.springbootrestdemo.model;
 
 public class User {
 
+    private int id;
     private String name;
     private int age;
     private String password;
@@ -13,6 +14,24 @@ public class User {
         this.name = name;
         this.age = age;
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,12 +58,4 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

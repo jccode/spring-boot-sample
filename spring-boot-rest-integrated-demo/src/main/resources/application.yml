@@ -1,0 +1,6 @@
+
+
+mybatis:
+type-aliases-package: com.github.jccode.springbootrestintegrateddemo.model.User
+
+
