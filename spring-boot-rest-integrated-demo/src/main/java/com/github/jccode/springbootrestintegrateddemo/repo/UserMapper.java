@@ -2,7 +2,7 @@ package com.github.jccode.springbootrestintegrateddemo.repo;
 
 import com.github.jccode.springbootrestintegrateddemo.model.User;
 import com.github.jccode.springbootrestintegrateddemo.model.UserCriteria;
-
+import com.github.jccode.springbootsample.core.repo.CrudMapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;

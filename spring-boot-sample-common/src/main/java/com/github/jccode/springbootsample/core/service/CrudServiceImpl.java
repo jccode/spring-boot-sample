@@ -17,12 +17,13 @@ public class CrudServiceImpl<T extends BaseEntity> implements CrudService<T> {
 
     public int save(T t) {
         Integer id = t.getId();
-        if (id != null && id != 0) {
-            mapper.insert(t);
+        int ret;
+        if (id == null || id == 0) {
+            ret = mapper.insert(t);
         } else {
-            mapper.updateByPrimaryKey(t);
+            ret = mapper.updateByPrimaryKey(t);
         }
-        return 0;
+        return ret;
     }
 
     public int updateSelective(T t) {

@@ -46,6 +46,7 @@
 
         <table tableName="user" domainObjectName="User">
             <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;User&gt;" />
+            <generatedKey column="ID" sqlStatement="HSQLDB" identity="true" />
         </table>
 
     </context>
