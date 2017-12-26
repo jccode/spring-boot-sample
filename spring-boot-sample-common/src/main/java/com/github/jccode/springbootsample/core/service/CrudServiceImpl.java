@@ -1,6 +1,6 @@
 package com.github.jccode.springbootsample.core.service;
 
-import com.github.jccode.springbootsample.core.dao.CrudMapper;
+import com.github.jccode.springbootsample.core.repo.CrudMapper;
 import com.github.jccode.springbootsample.core.model.BaseEntity;
 
 public class CrudServiceImpl<T extends BaseEntity> implements CrudService<T> {

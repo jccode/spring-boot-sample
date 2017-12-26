@@ -1,9 +1,8 @@
-package com.github.jccode.springbootrestintegrateddemo.repo;
+package com.github.jccode.springbootrestintegrateddemo.service;
 
-import com.github.jccode.springbootrestintegrateddemo.dao.UserMapper;
+import com.github.jccode.springbootrestintegrateddemo.repo.UserMapper;
 import com.github.jccode.springbootrestintegrateddemo.model.User;
-import com.github.jccode.springbootrestintegrateddemo.model.UserCriteria;
-import com.github.jccode.springbootsample.core.dao.CrudMapper;
+import com.github.jccode.springbootsample.core.repo.CrudMapper;
 import com.github.jccode.springbootsample.core.service.CrudServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.github.jccode.springbootsample.core.dao;
+package com.github.jccode.springbootsample.core.repo;
 
 @SuppressWarnings({"InterfaceNeverImplemented", "MybatisMapperMethodInspection"})
 public interface CrudMapper<T> {

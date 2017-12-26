@@ -1,0 +1,16 @@
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+spring:
+  datasource:
+    url: jdbc:hsqldb:mem:mydb
+    username: sa
+    driver-class-name: org.hsqldb.jdbcDriver
+    schema: classpath:db/hsqldb/schema.sql
+    data: classpath:db/hsqldb/data.sql
+#  jpa:
+#    generate-ddl: true
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+

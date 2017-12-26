@@ -1,4 +1,4 @@
-package com.github.jccode.springbootrestintegrateddemo.repo;
+package com.github.jccode.springbootrestintegrateddemo.service;
 
 import com.github.jccode.springbootrestintegrateddemo.model.User;
 import org.junit.Test;
