@@ -1,6 +1,7 @@
-package com.github.jccode.springbootrestintegrateddemo.service;
+package com.github.jccode.springbootrestintegrateddemo.controller;
 
 import com.github.jccode.springbootrestintegrateddemo.model.User;
+import com.github.jccode.springbootrestintegrateddemo.service.UserService;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
