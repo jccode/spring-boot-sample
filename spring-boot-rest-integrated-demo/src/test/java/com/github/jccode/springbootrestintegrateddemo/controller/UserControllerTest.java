@@ -1,5 +1,6 @@
 package com.github.jccode.springbootrestintegrateddemo.controller;
 
+import com.github.jccode.springbootrestintegrateddemo.form.UserForm;
 import com.github.jccode.springbootrestintegrateddemo.model.User;
 import com.github.jccode.springbootrestintegrateddemo.service.UserService;
 import org.assertj.core.util.Lists;
@@ -15,8 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.iterableWithSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -61,6 +64,33 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("error", is(true)));
+    }
+
+    @Test
+    public void registerFailed() throws Exception {
+        mvc.perform(post("/user/register"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("error", is(true)))
+                .andExpect(jsonPath("payload", iterableWithSize(3)));
+    }
+
+    @Test
+    public void registerSuccess() throws Exception {
+        String name = "testname";
+        UserForm userForm = new UserForm();
+        userForm.setName(name);
+        userForm.setAge(20);
+        userForm.setPassword("111111");
+        mvc.perform(post("/user/register")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", name)
+                .param("password", "111111")
+                .param("age", "20"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("error", is(false)))
+                .andExpect(jsonPath("payload.name", is(name)));
     }
 
 }
