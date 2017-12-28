@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.iterableWithSize;
 import static org.mockito.BDDMockito.given;
@@ -90,7 +91,8 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("error", is(false)))
-                .andExpect(jsonPath("payload.name", is(name)));
+                .andExpect(jsonPath("payload.name", is(name)))
+                .andExpect(jsonPath("payload.age", is(20)));
     }
 
 }
