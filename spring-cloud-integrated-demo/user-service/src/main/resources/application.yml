@@ -8,5 +8,3 @@ spring:
     driver-class-name: org.hsqldb.jdbcDriver
     schema: classpath:db/hsqldb/schema.sql
     data: classpath:db/hsqldb/data.sql
-
-
