@@ -3,6 +3,9 @@ package com.github.jccode.springbootsample.core.service;
 import com.github.jccode.springbootsample.core.repo.CrudMapper;
 import com.github.jccode.springbootsample.core.model.BaseEntity;
 
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.Date;
+
 public class CrudServiceImpl<T extends BaseEntity> implements CrudService<T> {
 
     private final CrudMapper<T> mapper;
@@ -19,8 +22,14 @@ public class CrudServiceImpl<T extends BaseEntity> implements CrudService<T> {
         Integer id = t.getId();
         int ret;
         if (id == null || id == 0) {
+            Date now = new Date();
+            t.setCreateTime(now);
+            t.setUpdateTime(now);
             ret = mapper.insert(t);
         } else {
+            if (t.getUpdateTime() == null) {
+                t.setUpdateTime(new Date());
+            }
             ret = mapper.updateByPrimaryKey(t);
         }
         return ret;

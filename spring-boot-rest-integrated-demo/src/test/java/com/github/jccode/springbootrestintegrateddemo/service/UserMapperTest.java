@@ -106,6 +106,7 @@ public class UserMapperTest {
         int age = 22;
         User user = new User();
         user.setName(randomName);
+        user.setPassword("pass");
         user.setAge(age);
         return user;
     }
