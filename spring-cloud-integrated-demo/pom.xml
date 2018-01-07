@@ -19,6 +19,8 @@
         <module>product-service</module>
         <module>order-service</module>
         <module>tracing-server</module>
+        <module>user-service</module>
+        <module>membership-service</module>
     </modules>
 
     <parent>
