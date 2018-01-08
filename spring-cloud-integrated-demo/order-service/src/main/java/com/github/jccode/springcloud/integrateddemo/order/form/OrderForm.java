@@ -14,6 +14,7 @@ public class OrderForm {
     private String address;
 
     @Valid
+    @NotNull
     private List<OrderItemForm> items;
 
     public Integer getUserId() {

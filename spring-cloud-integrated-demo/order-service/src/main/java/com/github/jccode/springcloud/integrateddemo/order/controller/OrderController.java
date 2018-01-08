@@ -2,6 +2,7 @@ package com.github.jccode.springcloud.integrateddemo.order.controller;
 
 import com.github.jccode.springbootsample.core.data.rest.RestResult;
 import com.github.jccode.springcloud.integrateddemo.order.form.OrderForm;
+import com.github.jccode.springcloud.integrateddemo.order.model.Order;
 import com.github.jccode.springcloud.integrateddemo.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -22,9 +23,8 @@ public class OrderController {
     @PostMapping("/reserve")
     public RestResult reserveOrder(@Valid OrderForm orderForm, BindingResult result) {
         checkResult(result);
-        //  TODO To be implemented.
-        System.out.println(orderForm);
-        return success("Hello");
+        Order order = orderService.reserveOrder(orderForm);
+        return success(order);
     }
 
     @PostMapping("/confirm")
