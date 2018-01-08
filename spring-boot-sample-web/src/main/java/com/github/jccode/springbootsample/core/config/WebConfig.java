@@ -5,5 +5,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("com.github.jccode.springbootsample.core.web")
-public class CommonConfig {
+public class WebConfig {
 }

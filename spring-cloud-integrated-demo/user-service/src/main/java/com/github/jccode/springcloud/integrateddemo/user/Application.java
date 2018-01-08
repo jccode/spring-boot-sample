@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan("com.github.jccode.springcloud.integrateddemo.user.repo")
-@Import(com.github.jccode.springbootsample.core.config.CommonConfig.class)
+@Import(com.github.jccode.springbootsample.core.config.WebConfig.class)
 public class Application {
 
     public static void main(String[] args) {

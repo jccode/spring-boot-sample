@@ -1,8 +1,21 @@
 server:
   port: 8080
+zuul:
+#  prefix: /api
+  routes:
+    user:
+      url: http://localhost:10010
+    account:
+      url: http://localhost:10020
+    product:
+      url: http://localhost:10030
+    order:
+      url: http://localhost:10040
+    membership:
+      url: http://localhost:10050
 
-zuul.routes.user.url: http://localhost:10010
-zuul.routes.account.url: http://localhost:10020
-zuul.routes.product.url: http://localhost:10030
-zuul.routes.order.url: http://localhost:10040
-zuul.routes.membership.url: http://localhost:10050
+#zuul.routes.user.url: http://localhost:10010
+#zuul.routes.account.url: http://localhost:10020
+#zuul.routes.product.url: http://localhost:10030
+#zuul.routes.order.url: http://localhost:10040
+#zuul.routes.membership.url: http://localhost:10050
