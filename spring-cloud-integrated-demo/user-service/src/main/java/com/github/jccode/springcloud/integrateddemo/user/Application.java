@@ -11,10 +11,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan("com.github.jccode.springcloud.integrateddemo.user.repo")
+@Import(com.github.jccode.springbootsample.core.config.CommonConfig.class)
 public class Application {
 
     public static void main(String[] args) {
