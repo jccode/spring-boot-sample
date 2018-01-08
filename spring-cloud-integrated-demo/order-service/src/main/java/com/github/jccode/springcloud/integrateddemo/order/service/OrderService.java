@@ -1,7 +1,9 @@
 package com.github.jccode.springcloud.integrateddemo.order.service;
 
+import com.github.jccode.springbootsample.core.data.rest.RestResult;
 import com.github.jccode.springbootsample.core.repo.CrudMapper;
 import com.github.jccode.springbootsample.core.service.CrudServiceImpl;
+import com.github.jccode.springcloud.integrateddemo.account.api.AccountAPI;
 import com.github.jccode.springcloud.integrateddemo.order.form.OrderForm;
 import com.github.jccode.springcloud.integrateddemo.order.model.Order;
 import com.github.jccode.springcloud.integrateddemo.order.repo.OrderItemMapper;
@@ -18,6 +20,12 @@ public class OrderService extends CrudServiceImpl<Order> {
     @Autowired
     private OrderItemMapper orderItemMapper;
 
+    /**
+     * TODO  Not works currently.
+     */
+    @Autowired
+    private AccountAPI accountClient;
+
     public OrderService(CrudMapper<Order> mapper) {
         super(mapper);
     }
@@ -25,6 +33,14 @@ public class OrderService extends CrudServiceImpl<Order> {
     public Order reserveOrder(OrderForm orderForm) {
         Integer userId = orderForm.getUserId();
         // 获取用户余额
+        RestResult<Integer> result = accountClient.getBalance(userId);
+        if (!result.isError()) {
+            Integer balance = result.getPayload();
+        }
+
+        System.out.println("by feign client: ");
+        System.out.println(result);
+
         return null;
     }
 }
