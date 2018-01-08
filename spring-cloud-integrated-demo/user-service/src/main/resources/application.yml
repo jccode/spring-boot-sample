@@ -1,4 +1,5 @@
-
+server:
+  port: 10010
 mybatis:
   mapper-locations: classpath*:mapper/**/*Mapper.xml
 spring:
@@ -8,3 +9,4 @@ spring:
     driver-class-name: org.hsqldb.jdbcDriver
     schema: classpath:db/hsqldb/schema.sql
     data: classpath:db/hsqldb/data.sql
+

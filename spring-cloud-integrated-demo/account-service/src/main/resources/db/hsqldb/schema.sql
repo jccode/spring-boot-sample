@@ -9,6 +9,6 @@ CREATE TABLE account (
   update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
 );
 
-ALTER TABLE account ADD FOREIGN KEY (user_id) REFERENCES USER(id);
+-- ALTER TABLE account ADD FOREIGN KEY (user_id) REFERENCES account(id);
 
 CREATE INDEX account_name ON account (name);

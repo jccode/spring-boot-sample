@@ -29,7 +29,7 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.github.jccode.springbootrestintegrateddemo.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.github.jccode.springcloud.integrateddemo.account.model" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
             <property name="rootClass" value="com.github.jccode.springbootsample.core.model.BaseEntity"/>
@@ -39,13 +39,13 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.github.jccode.springbootrestintegrateddemo.repo" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.github.jccode.springcloud.integrateddemo.account.repo" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper"/>
         </javaClientGenerator>
 
-        <table tableName="user" domainObjectName="User">
-            <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;User&gt;" />
+        <table tableName="account" domainObjectName="Account">
+            <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;Account&gt;" />
             <generatedKey column="ID" sqlStatement="HSQLDB" identity="true" />
         </table>
 
