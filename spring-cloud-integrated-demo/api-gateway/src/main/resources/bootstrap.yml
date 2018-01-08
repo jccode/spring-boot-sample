@@ -1,3 +1,3 @@
 spring:
   application:
-    name: apigateway
+    name: api-gateway
