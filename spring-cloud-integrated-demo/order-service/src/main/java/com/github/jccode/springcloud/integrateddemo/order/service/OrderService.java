@@ -20,11 +20,8 @@ public class OrderService extends CrudServiceImpl<Order> {
     @Autowired
     private OrderItemMapper orderItemMapper;
 
-    /**
-     * TODO  Not works currently.
-     */
     @Autowired
-    private AccountAPI accountClient;
+    private AccountClient accountClient;
 
     public OrderService(CrudMapper<Order> mapper) {
         super(mapper);
@@ -34,11 +31,14 @@ public class OrderService extends CrudServiceImpl<Order> {
         Integer userId = orderForm.getUserId();
         // 获取用户余额
         RestResult<Integer> result = accountClient.getBalance(userId);
-        if (!result.isError()) {
-            Integer balance = result.getPayload();
-        }
 
         System.out.println("by feign client: ");
+        if (!result.isError()) {
+            Integer balance = result.getPayload();
+            System.out.println("return success: "+balance);
+        } else {
+            System.out.println("return fail:");
+        }
         System.out.println(result);
 
         return null;
