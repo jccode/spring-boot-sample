@@ -8,6 +8,8 @@ import com.github.jccode.springcloud.integrateddemo.order.form.OrderForm;
 import com.github.jccode.springcloud.integrateddemo.order.model.Order;
 import com.github.jccode.springcloud.integrateddemo.order.repo.OrderItemMapper;
 import com.github.jccode.springcloud.integrateddemo.order.repo.OrderMapper;
+import com.github.jccode.springcloud.integrateddemo.user.api.UserAPI;
+import com.github.jccode.springcloud.integrateddemo.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +25,17 @@ public class OrderService extends CrudServiceImpl<Order> {
     @Autowired
     private AccountClient accountClient;
 
+    @Autowired
+    private UserAPI userClient;
+
     public OrderService(CrudMapper<Order> mapper) {
         super(mapper);
     }
 
     public Order reserveOrder(OrderForm orderForm) {
         Integer userId = orderForm.getUserId();
+
+        /*
         // 获取用户余额
         RestResult<Integer> result = accountClient.getBalance(userId);
 
@@ -40,6 +47,16 @@ public class OrderService extends CrudServiceImpl<Order> {
             System.out.println("return fail:");
         }
         System.out.println(result);
+        */
+
+        RestResult<User> tom = userClient.find("tom");
+        if (!tom.isError()) {
+            User user = tom.getPayload();
+            System.out.println("success: " + user);
+        } else {
+            System.out.println("fail: " + tom.getPayload());
+        }
+        System.out.println(tom);
 
         return null;
     }

@@ -25,6 +25,7 @@ public class OrderController {
         checkResult(result);
         Order order = orderService.reserveOrder(orderForm);
         return success(order);
+//        return success("Hello");
     }
 
     @PostMapping("/confirm")
