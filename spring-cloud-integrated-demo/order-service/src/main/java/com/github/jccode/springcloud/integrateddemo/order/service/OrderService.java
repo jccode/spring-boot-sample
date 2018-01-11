@@ -49,7 +49,7 @@ public class OrderService extends CrudServiceImpl<Order> {
         System.out.println(result);
         */
 
-        RestResult<User> tom = userClient.find("tom");
+        RestResult<User> tom = userClient.find("tom1");
         if (!tom.isError()) {
             User user = tom.getPayload();
             System.out.println("success: " + user);

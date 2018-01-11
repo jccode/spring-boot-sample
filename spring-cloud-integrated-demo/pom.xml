@@ -20,6 +20,7 @@
         <module>tracing-server</module>
         <module>user-service</module>
         <module>membership-service</module>
+        <module>common-lib</module>
     </modules>
 
     <parent>
