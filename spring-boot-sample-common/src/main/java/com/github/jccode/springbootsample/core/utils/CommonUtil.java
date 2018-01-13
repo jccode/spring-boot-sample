@@ -22,4 +22,12 @@ public class CommonUtil {
     public static <T> RestResult<T> fail(String msg) {
         return RestResult.fail(msg);
     }
+
+    public static <T> RestResult<T> restResult(T t, String msg) {
+        return RestResult.create(t, msg);
+    }
+
+    public static <T> RestResult<T> restResult(T t) {
+        return RestResult.create(t);
+    }
 }

@@ -39,6 +39,8 @@ public class UserControllerTest {
 
     private static final String TEST_UNAME = "uname";
     private static final String TEST_NOT_EXIST_NAME = "empty-user";
+    private static final Integer ID_EXIST = 1;
+    private static final Integer ID_NOT_EXIST = 100;
 
     @Before
     public void setup() {
@@ -50,11 +52,31 @@ public class UserControllerTest {
 
         given(userService.findByName(TEST_UNAME)).willReturn(Lists.newArrayList(testUser));
         given(userService.findByName(TEST_NOT_EXIST_NAME)).willReturn(Lists.emptyList());
+
+        given(userService.find(ID_EXIST)).willReturn(testUser);
+        given(userService.find(ID_NOT_EXIST)).willReturn(null);
+    }
+
+    @Test
+    public void findUserByNameSuccess() throws Exception {
+        mvc.perform(get("/users?name="+TEST_UNAME))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("isError", is(false)))
+                .andExpect(jsonPath("payload.name", is(TEST_UNAME)));
+    }
+
+    @Test
+    public void findUserByNameFailed() throws Exception {
+        mvc.perform(get("/users?name="+TEST_NOT_EXIST_NAME))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("isError", is(true)));
     }
 
     @Test
     public void findUserSuccess() throws Exception {
-        mvc.perform(get("/"+TEST_UNAME))
+        mvc.perform(get("/users/"+ID_EXIST))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("isError", is(false)))
@@ -63,7 +85,7 @@ public class UserControllerTest {
 
     @Test
     public void findUserFailed() throws Exception {
-        mvc.perform(get("/"+TEST_NOT_EXIST_NAME))
+        mvc.perform(get("/users/"+ID_NOT_EXIST))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("isError", is(true)));

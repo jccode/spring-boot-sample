@@ -36,6 +36,14 @@ public class RestResult<R> {
         return new RestResult<>(true, new Error(message, data));
     }
 
+    public static <R> RestResult<R> create(R payload, String message) {
+        return payload == null ? fail(message) : success(payload);
+    }
+
+    public static <R> RestResult<R> create(R payload) {
+        return payload == null ? fail("payload is null") : success(payload);
+    }
+
     public boolean isError() {
         return isError;
     }

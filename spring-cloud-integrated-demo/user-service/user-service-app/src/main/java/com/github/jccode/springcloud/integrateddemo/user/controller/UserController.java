@@ -6,6 +6,7 @@ import com.github.jccode.springcloud.integrateddemo.user.model.User;
 import com.github.jccode.springcloud.integrateddemo.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class UserController implements UserAPI {
     private UserService userService;
 
     @Override
-    public RestResult<User> find(@PathVariable String name) {
+    public RestResult<User> findByName(@RequestParam("name") String name) {
         List<User> users = userService.findByName(name);
         if (users == null || users.isEmpty()) {
             return fail("user not found");
@@ -30,5 +31,10 @@ public class UserController implements UserAPI {
         } else {
             return success(users.get(0));
         }
+    }
+
+    @Override
+    public RestResult<User> find(@PathVariable("id") Integer id) {
+        return RestResult.create(userService.find(id));
     }
 }
