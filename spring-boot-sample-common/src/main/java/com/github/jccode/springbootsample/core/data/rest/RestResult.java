@@ -1,61 +1,94 @@
 package com.github.jccode.springbootsample.core.data.rest;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
-/**
- * Rest result
- *
- * @param <T>
- */
-public class RestResult<T> {
+public class RestResult<R> {
 
-    protected boolean error;
+    private boolean isError;
 
-    protected T payload;
+    private R payload;
 
-    protected Map<String, String> meta;
+    private Error error;
+
+    public RestResult(boolean isError, R payload) {
+        this.isError = isError;
+        this.payload = payload;
+    }
+
+    public RestResult(boolean isError, Error error) {
+        this.isError = isError;
+        this.error = error;
+    }
 
     public RestResult() {
     }
 
-    public RestResult(boolean error) {
-        this.error = error;
+    public static <R> RestResult<R> success(R payload) {
+        return new RestResult<>(false, payload);
     }
 
-    public RestResult(T payload) {
-        this.payload = payload;
+    public static <R> RestResult<R> fail(String message) {
+        return new RestResult<>(true, new Error(message));
     }
 
-    public RestResult(boolean error, T payload) {
-        this.error = error;
-        this.payload = payload;
-    }
-
-    public RestResult(boolean error, T payload, Map<String, String> meta) {
-        this.error = error;
-        this.payload = payload;
-        this.meta = meta;
+    public static <R> RestResult<R> fail(String message, Object data) {
+        return new RestResult<>(true, new Error(message, data));
     }
 
     public boolean isError() {
-        return error;
+        return isError;
     }
 
-    public void setError(boolean error) {
-        this.error = error;
+    public boolean getIsError() {
+        return isError;
     }
 
-    public T getPayload() {
+    public void setIsError(boolean error) {
+        isError = error;
+    }
+
+    public R getPayload() {
         return payload;
     }
 
-    public void setPayload(T payload) {
+    public void setPayload(R payload) {
         this.payload = payload;
     }
 
-    public void addMeta(String key, String value) {
-        if (meta == null) meta = new HashMap<>();
-        meta.put(key, value);
+    public Error getError() {
+        return error;
+    }
+
+    public void setError(Error error) {
+        this.error = error;
+    }
+
+    public <T> T map(Function<? super R, ? extends T> successFun) {
+        return isError() ? null : successFun.apply(payload);
+    }
+
+    public void apply(Consumer<? super R> successFun) {
+        successFun.accept(payload);
+    }
+
+    public <T> T map(
+            Function<? super R, ? extends T> successFun,
+            Function<? super Error, ? extends T> failFun
+    ) {
+        return isError() ?
+                failFun.apply(error) :
+                successFun.apply(payload);
+    }
+
+    public void apply(
+            Consumer<? super R> successFun,
+            Consumer<? super Error> failFun
+    ) {
+        if (isError()) {
+            failFun.accept(error);
+        } else {
+            successFun.accept(payload);
+        }
     }
 }

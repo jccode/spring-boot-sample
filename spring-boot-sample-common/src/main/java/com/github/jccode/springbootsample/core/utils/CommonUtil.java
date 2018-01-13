@@ -1,8 +1,9 @@
 package com.github.jccode.springbootsample.core.utils;
 
-import com.github.jccode.springbootsample.core.data.rest.Failed;
-import com.github.jccode.springbootsample.core.data.rest.Success;
+import com.github.jccode.springbootsample.core.data.rest.RestResult;
 import com.github.jccode.springbootsample.core.exception.RestException;
+
+import java.io.Serializable;
 
 public class CommonUtil {
 
@@ -10,15 +11,15 @@ public class CommonUtil {
         throw new RestException(message);
     }
 
-    public static <T> Success<T> success(T t) {
-        return new Success<>(t);
+    public static <T> RestResult<T> success(T t) {
+        return RestResult.success(t);
     }
 
-    public static <T> Failed<T> fail(T t) {
-        return new Failed<>(t);
+    public static <T> RestResult<T> fail(String msg, Object r) {
+        return RestResult.fail(msg, r);
     }
 
-    public static Failed<String> fail(String msg) {
-        return new Failed<>(msg);
+    public static <T> RestResult<T> fail(String msg) {
+        return RestResult.fail(msg);
     }
 }

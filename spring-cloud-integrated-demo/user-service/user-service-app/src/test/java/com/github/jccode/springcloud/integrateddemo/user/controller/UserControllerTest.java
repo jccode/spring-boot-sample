@@ -57,7 +57,7 @@ public class UserControllerTest {
         mvc.perform(get("/"+TEST_UNAME))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("error", is(false)))
+                .andExpect(jsonPath("isError", is(false)))
                 .andExpect(jsonPath("payload.name", is(TEST_UNAME)));
     }
 
@@ -66,6 +66,6 @@ public class UserControllerTest {
         mvc.perform(get("/"+TEST_NOT_EXIST_NAME))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("error", is(true)));
+                .andExpect(jsonPath("isError", is(true)));
     }
 }

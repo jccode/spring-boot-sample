@@ -20,11 +20,10 @@ public class UserController implements UserAPI {
     private UserService userService;
 
     @Override
-    public RestResult find(@PathVariable String name) {
+    public RestResult<User> find(@PathVariable String name) {
         List<User> users = userService.findByName(name);
         if (users == null || users.isEmpty()) {
             return fail("user not found");
-//            return new Failed<>(null);
         }
         else if (users.size() > 1) {
             return fail("more than one user found");

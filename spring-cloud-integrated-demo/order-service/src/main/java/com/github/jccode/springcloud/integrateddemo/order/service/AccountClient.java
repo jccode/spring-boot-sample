@@ -17,6 +17,6 @@ class AccountAPIFallback implements AccountClient {
     @Override
     public RestResult<Integer> getBalance(Integer userId) {
         System.out.println("get balance fallback 111. ");
-        return fail(0);
+        return fail("0");
     }
 }

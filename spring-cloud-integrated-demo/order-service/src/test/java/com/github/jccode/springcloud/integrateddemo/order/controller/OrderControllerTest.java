@@ -40,6 +40,6 @@ public class OrderControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-        .andExpect(jsonPath("error", is(true)));
+        .andExpect(jsonPath("isError", is(true)));
     }
 }

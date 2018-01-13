@@ -55,7 +55,7 @@ public class UserControllerTest {
         mvc.perform(get("/user/"+TEST_USER_NAME))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("error", is(false)))
+                .andExpect(jsonPath("isError", is(false)))
                 .andExpect(jsonPath("payload.name", is(TEST_USER_NAME)));
     }
 
@@ -64,7 +64,7 @@ public class UserControllerTest {
         mvc.perform(get("/user/"+TEST_NOT_EXIST_USER))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("error", is(true)));
+                .andExpect(jsonPath("isError", is(true)));
     }
 
     @Test
@@ -72,8 +72,8 @@ public class UserControllerTest {
         mvc.perform(post("/user/register"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("error", is(true)))
-                .andExpect(jsonPath("payload", iterableWithSize(3)));
+                .andExpect(jsonPath("isError", is(true)))
+                .andExpect(jsonPath("error.data", iterableWithSize(3)));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class UserControllerTest {
                 .param("age", "20"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("error", is(false)))
+                .andExpect(jsonPath("isError", is(false)))
                 .andExpect(jsonPath("payload.name", is(name)))
                 .andExpect(jsonPath("payload.age", is(20)));
     }

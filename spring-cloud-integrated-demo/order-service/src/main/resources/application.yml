@@ -9,3 +9,4 @@ spring:
     driver-class-name: org.hsqldb.jdbcDriver
     schema: classpath:db/hsqldb/schema.sql
     data: classpath:db/hsqldb/data.sql
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
