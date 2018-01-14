@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.github.jccode</groupId>
-            <artifactId>spring-boot-sample-common</artifactId>
+            <artifactId>common-lib</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

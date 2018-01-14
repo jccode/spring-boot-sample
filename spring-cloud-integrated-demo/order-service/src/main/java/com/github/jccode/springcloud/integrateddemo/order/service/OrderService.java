@@ -23,7 +23,7 @@ public class OrderService extends CrudServiceImpl<Order> {
     private OrderItemMapper orderItemMapper;
 
     @Autowired
-    private AccountClient accountClient;
+    private AccountAPI accountClient;
 
     @Autowired
     private UserAPI userClient;
@@ -34,29 +34,13 @@ public class OrderService extends CrudServiceImpl<Order> {
 
     public Order reserveOrder(OrderForm orderForm) {
         Integer userId = orderForm.getUserId();
+        // 获取产品总价
+        int totalPrice = 0; // TODO: Calculate total price by each product.
 
-        /*
-        // 获取用户余额
+        // 检查用户余额
         RestResult<Integer> result = accountClient.getBalance(userId);
 
-        System.out.println("by feign client: ");
-        if (!result.isError()) {
-            Integer balance = result.getPayload();
-            System.out.println("return success: "+balance);
-        } else {
-            System.out.println("return fail:");
-        }
-        System.out.println(result);
-        */
-
-        RestResult<User> tom = userClient.find("tom1");
-        if (!tom.isError()) {
-            User user = tom.getPayload();
-            System.out.println("success: " + user);
-        } else {
-            System.out.println("fail: " + tom.getPayload());
-        }
-        System.out.println(tom);
+        // 判断用户余额是否足够赎买. 然后生成订单.
 
         return null;
     }
