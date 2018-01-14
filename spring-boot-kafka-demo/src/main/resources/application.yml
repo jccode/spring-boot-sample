@@ -4,3 +4,6 @@ spring:
     consumer:
       group-id: test
       auto-offset-reset: earliest
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#    producer:
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
