@@ -12,6 +12,6 @@ public interface UserAPI {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     RestResult<User> findByName(@RequestParam("name") String name);
 
-    @GetMapping("/users/{id}")
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     RestResult<User> find(@PathVariable("id") Integer id);
 }
