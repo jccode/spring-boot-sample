@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.event;
+package com.github.jccode.springbootkafkademo.jsondemo2.event;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -6,9 +6,8 @@ import java.util.UUID;
 /**
  * Event
  *
- * 这里不能加泛式,JsonDeserlizer反序列化时,要求精确匹配到泛式中的类型形式. 会导致kafkaTemplate注入失败.
  */
-public class Event implements Serializable {
+public class Event<T> implements Serializable {
 
     /**
      * 事件ID
@@ -23,18 +22,18 @@ public class Event implements Serializable {
     /**
      * 数据
      */
-    private Object payload;
+    private T payload;
 
     public Event() {
     }
 
-    public Event(String uuid, String type, Object payload) {
+    public Event(String uuid, String type, T payload) {
         this.uuid = uuid;
         this.type = type;
         this.payload = payload;
     }
 
-    public Event(String type, Object payload) {
+    public Event(String type, T payload) {
         this.uuid = UUID.randomUUID().toString();
         this.type = type;
         this.payload = payload;
@@ -56,11 +55,11 @@ public class Event implements Serializable {
         this.type = type;
     }
 
-    public Object getPayload() {
+    public T getPayload() {
         return payload;
     }
 
-    public void setPayload(Object payload) {
+    public void setPayload(T payload) {
         this.payload = payload;
     }
 }

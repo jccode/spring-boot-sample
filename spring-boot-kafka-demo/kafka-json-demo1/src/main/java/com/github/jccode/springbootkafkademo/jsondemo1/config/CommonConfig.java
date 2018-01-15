@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.config;
+package com.github.jccode.springbootkafkademo.jsondemo1.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -63,14 +63,7 @@ public class CommonConfig {
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setRetryTemplate(new RetryTemplate());
-        factory.setRecordFilterStrategy(new RecordFilterStrategy<String, String>() {
-
-            @Override
-            public boolean filter(ConsumerRecord<String, String> consumerRecord) {
-                return consumerRecord.value().equals("bar");
-            }
-
-        });
+        factory.setRecordFilterStrategy(consumerRecord -> consumerRecord.value().equals("bar"));
         return factory;
     }
 

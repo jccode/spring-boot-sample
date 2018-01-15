@@ -1,6 +1,6 @@
-package com.github.jccode.springbootkafkademo.config;
+package com.github.jccode.springbootkafkademo.jsondemo1.config;
 
-import com.github.jccode.springbootkafkademo.event.Event;
+import com.github.jccode.springbootkafkademo.jsondemo1.event.Event;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

@@ -6,7 +6,13 @@
 
     <groupId>com.github.jccode</groupId>
     <artifactId>spring-boot-kafka-demo</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>kafka-simple-demo1</module>
+        <module>kafka-json-demo1</module>
+        <module>kafka-json-demo2</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

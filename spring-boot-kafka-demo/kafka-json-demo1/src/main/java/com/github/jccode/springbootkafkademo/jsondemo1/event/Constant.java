@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.event;
+package com.github.jccode.springbootkafkademo.jsondemo1.event;
 
 public interface Constant {
 
