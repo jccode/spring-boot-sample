@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Import;
 @EnableDiscoveryClient
 @EnableFeignClients("com.github.jccode.springcloud.integrateddemo.*.api")
 @EnableCircuitBreaker
-@MapperScan("com.github.jccode.springcloud.integrateddemo.*.repo")
+@MapperScan("com.github.jccode.springcloud.integrateddemo.**.*.repo")
 @ComponentScan({"com.github.jccode.springcloud.integrateddemo.*.api"})
 @Import(com.github.jccode.springbootsample.core.config.WebConfig.class)
 public class MicroServiceConfig {

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="hsqldb" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+        <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin" />
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin" >
+            <property name="searchString" value="Example$"/>
+            <property name="replaceString" value="Criteria"/>
+        </plugin>
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+                        connectionURL="jdbc:hsqldb:mem:mydb"
+                        userId="sa" />
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.github.jccode.springcloud.integrateddemo.common.event.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+            <property name="rootClass" value="com.github.jccode.springbootsample.core.model.BaseEntity"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.github.jccode.springcloud.integrateddemo.common.event.repo" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper"/>
+        </javaClientGenerator>
+
+        <table tableName="event_pub" domainObjectName="EventPub">
+            <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;EventPub&gt;" />
+            <generatedKey column="ID" sqlStatement="HSQLDB" identity="true" />
+        </table>
+
+        <table tableName="event_sub" domainObjectName="EventSub">
+            <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;EventSub&gt;" />
+            <generatedKey column="ID" sqlStatement="HSQLDB" identity="true" />
+        </table>
+
+    </context>
+
+</generatorConfiguration>

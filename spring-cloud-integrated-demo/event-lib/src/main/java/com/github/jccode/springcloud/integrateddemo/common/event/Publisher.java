@@ -1,6 +1,8 @@
 package com.github.jccode.springcloud.integrateddemo.common.event;
 
 
+import org.springframework.stereotype.Component;
+
 /**
  * Event Publisher
  *
@@ -14,5 +16,8 @@ package com.github.jccode.springcloud.integrateddemo.common.event;
  * 3. 定时器2 扫描状态为 Pending 的记录, 重新发布到 Kafka.
  *
  */
+@Component
 public class Publisher {
+
+    
 }
