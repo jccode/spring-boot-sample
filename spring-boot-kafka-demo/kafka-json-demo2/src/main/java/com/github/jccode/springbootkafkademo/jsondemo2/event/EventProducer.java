@@ -1,5 +1,7 @@
 package com.github.jccode.springbootkafkademo.jsondemo2.event;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -19,6 +21,8 @@ public class EventProducer {
     @Autowired
     private Publisher publisher;
 
+    private static final Logger logger = LoggerFactory.getLogger(EventProducer.class);
+
     public void produceEvents1() {
         for (int i = 0; i < 10; i++) {
             List<String> tokens = new ArrayList<>();
@@ -26,7 +30,14 @@ public class EventProducer {
                 tokens.add(String.valueOf(j));
             }
             Event<List<String>> tokenEvent = new Event<>("tokens", tokens);
-            publisher.send(Constant.EVENT_TOPIC, String.valueOf(i), tokenEvent);
+            publisher.send(Constant.EVENT_TOPIC, String.valueOf(i), tokenEvent).addCallback(
+                    sendResult -> {
+                        logger.info("Producer send success. " + sendResult.getProducerRecord() + " | " + sendResult.getRecordMetadata());
+                    },
+                    error -> {
+                        logger.info("Producer send failed. " + error.getMessage());
+                    }
+            );
         }
     }
 

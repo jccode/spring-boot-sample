@@ -1,8 +1,15 @@
-package com.github.jccode.springcloud.integrateddemo.common.event.model;
+package com.github.jccode.springcloud.integrateddemo.common.event;
 
 import java.io.Serializable;
 
-public class Event implements Serializable {
+/**
+ * 领域事件.
+ *
+ * 当将事件进行持久化时, 需要一个持久化对象与之对应.
+ * (持久化对象中的payload必须转为字符串进行存储, 另外还需要一个事件状态, 表示发送成功/失败.)
+ *
+ */
+public class Event<T> implements Serializable {
 
     /**
      * 事件ID
@@ -17,7 +24,7 @@ public class Event implements Serializable {
     /**
      * 数据
      */
-    private String payload;
+    private T payload;
 
     public Event() {
     }
@@ -38,11 +45,11 @@ public class Event implements Serializable {
         this.type = type;
     }
 
-    public String getPayload() {
+    public T getPayload() {
         return payload;
     }
 
-    public void setPayload(String payload) {
+    public void setPayload(T payload) {
         this.payload = payload;
     }
 }
