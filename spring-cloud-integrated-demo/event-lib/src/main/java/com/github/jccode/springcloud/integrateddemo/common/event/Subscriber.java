@@ -1,5 +1,7 @@
 package com.github.jccode.springcloud.integrateddemo.common.event;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Subscriber 消息订阅
  *
@@ -12,5 +14,6 @@ package com.github.jccode.springcloud.integrateddemo.common.event;
  * 2. 自定义一个事件处理器的注解. 可以针对事件类型(type)进行处理?
  *
  */
+@Component
 public class Subscriber {
 }
