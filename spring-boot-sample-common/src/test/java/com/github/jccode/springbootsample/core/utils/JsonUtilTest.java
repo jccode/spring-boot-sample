@@ -1,4 +1,4 @@
-package com.github.jccode.springcloud.integrateddemo.common.utils;
+package com.github.jccode.springbootsample.core.utils;
 
 import org.junit.Test;
 
@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import static org.junit.Assert.*;
 
-public class JsonsTest {
+public class JsonUtilTest {
 
     static class User implements Serializable {
         public String name;
@@ -47,14 +47,13 @@ public class JsonsTest {
 
     @Test
     public void toJson() {
-        String s = Jsons.toJson(tom);
+        String s = JsonUtil.toJson(tom);
         assertEquals("serialized string should equals.", tomJsonStr, s);
     }
 
     @Test
     public void fromJson() {
-        User user = Jsons.fromJson(tomJsonStr, User.class);
+        User user = JsonUtil.fromJson(tomJsonStr, User.class);
         assertEquals("should equals after deserilized.", tom, user);
     }
-
 }

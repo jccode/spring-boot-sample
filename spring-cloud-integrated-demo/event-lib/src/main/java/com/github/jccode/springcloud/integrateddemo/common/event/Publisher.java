@@ -1,25 +1,31 @@
 package com.github.jccode.springcloud.integrateddemo.common.event;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.kafka.support.SendResult;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.concurrent.ListenableFuture;
 
-/**
- * Event Publisher
- *
- * 要点:
- *
- * 1. 需要先将事件持久化到DB, 待Kafka发送成功后, 在回调中更新发送状态为成功.
- *
- * 逻辑:
- * 1. 先将消息落地,写库;
- * 2. 定时器1 扫描状态为 New 的记录, 发布到 Kafka;
- * 3. 定时器2 扫描状态为 Pending 的记录, 重新发布到 Kafka.
- *
- */
 @Component
 public class Publisher {
 
-    void publish() {
+    @Autowired
+    private KafkaTemplate<String, ?> template;
 
+    public ListenableFuture<? extends SendResult<String, ?>> send(Message<?> message) {
+        return template.send(message);
+    }
+
+    public <T> ListenableFuture<? extends SendResult<String, ?>> send(String topic, T t) {
+        Message<T> message = MessageBuilder.withPayload(t).setHeader(KafkaHeaders.TOPIC, topic).build();
+        return send(message);
+    }
+
+    public <T> ListenableFuture<? extends SendResult<String, ?>> send(String topic, String key, T t) {
+        Message<T> message = MessageBuilder.withPayload(t).setHeader(KafkaHeaders.TOPIC, topic).setHeader(KafkaHeaders.MESSAGE_KEY, key).build();
+        return send(message);
     }
 }

@@ -15,5 +15,5 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class Subscriber {
+public class EventSubscriber {
 }

@@ -525,6 +525,66 @@ public class EventPubCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andLockIsNull() {
+            addCriterion("LOCK is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockIsNotNull() {
+            addCriterion("LOCK is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockEqualTo(Integer value) {
+            addCriterion("LOCK =", value, "lock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockNotEqualTo(Integer value) {
+            addCriterion("LOCK <>", value, "lock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockGreaterThan(Integer value) {
+            addCriterion("LOCK >", value, "lock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockGreaterThanOrEqualTo(Integer value) {
+            addCriterion("LOCK >=", value, "lock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockLessThan(Integer value) {
+            addCriterion("LOCK <", value, "lock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockLessThanOrEqualTo(Integer value) {
+            addCriterion("LOCK <=", value, "lock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockIn(List<Integer> values) {
+            addCriterion("LOCK in", values, "lock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockNotIn(List<Integer> values) {
+            addCriterion("LOCK not in", values, "lock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockBetween(Integer value1, Integer value2) {
+            addCriterion("LOCK between", value1, value2, "lock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockNotBetween(Integer value1, Integer value2) {
+            addCriterion("LOCK not between", value1, value2, "lock");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("CREATE_TIME is null");
             return (Criteria) this;

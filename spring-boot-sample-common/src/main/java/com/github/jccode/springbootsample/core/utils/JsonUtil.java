@@ -1,4 +1,4 @@
-package com.github.jccode.springcloud.integrateddemo.common.utils;
+package com.github.jccode.springbootsample.core.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,7 +13,7 @@ import java.io.IOException;
  * Json util
  *
  */
-public class Jsons {
+public class JsonUtil {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -22,7 +22,7 @@ public class Jsons {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    private Jsons() {
+    private JsonUtil() {
     }
 
     public static ObjectMapper getMapper() {
