@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import static com.github.jccode.springbootrestdemo.test.Matchers.extractJsonPath;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -50,7 +51,8 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("error", is(false)))
-                .andExpect(jsonPath("payload.name", is(TEST_USER_NAME)));
+                .andExpect(jsonPath("payload.name", is(TEST_USER_NAME)))
+        ;
     }
 
     @Test
