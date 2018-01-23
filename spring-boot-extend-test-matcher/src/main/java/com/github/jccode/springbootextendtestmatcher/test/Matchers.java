@@ -1,4 +1,4 @@
-package com.github.jccode.springbootrestdemo.test;
+package com.github.jccode.springbootextendtestmatcher.test;
 
 import org.hamcrest.Matcher;
 import org.springframework.test.web.servlet.ResultMatcher;

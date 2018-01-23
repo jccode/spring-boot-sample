@@ -2,7 +2,6 @@ package com.github.jccode.springbootrestdemo;
 
 import com.github.jccode.springbootrestdemo.model.User;
 import com.github.jccode.springbootrestdemo.service.UserService;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import static com.github.jccode.springbootrestdemo.test.Matchers.extractJsonPath;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;

@@ -1,18 +1,18 @@
-package com.github.jccode.springbootrestdemo;
-
+package com.github.jccode.springbootextendtestmatcher.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import static com.github.jccode.springbootextendtestmatcher.test.Matchers.extractJsonPath;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -24,10 +24,10 @@ public class HelloControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void getHello() throws Exception {
-        mvc.perform(get("/").accept(MediaType.APPLICATION_JSON))
+    public void extract() throws Exception {
+        mvc.perform(get("/ping"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("Greetings from Spring Boot!")));
+                .andDo(print())
+                .andExpect(extractJsonPath("result", is("pong")));
     }
-
 }

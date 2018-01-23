@@ -1,5 +1,4 @@
-package com.github.jccode.springbootrestdemo.test;
-
+package com.github.jccode.springbootextendtestmatcher.test;
 
 import com.jayway.jsonpath.JsonPath;
 import org.hamcrest.Matcher;
@@ -25,7 +24,6 @@ public class ExtractJsonPathResultMatchers extends JsonPathResultMatchers {
     protected ExtractJsonPathResultMatchers(String expression, Object... args) {
         super(expression, args);
         this.jsonPathHelper = new JsonPathExpectationsHelper(expression, args);
-
         this.jsonPath = JsonPath.compile("payload"); // result
     }
 
@@ -70,7 +68,6 @@ public class ExtractJsonPathResultMatchers extends JsonPathResultMatchers {
         String result = jsonPath.read(content);
         byte[] decode = Base64.getDecoder().decode(result);
         return new String(decode);
-//        return result;
     }
 
 }
