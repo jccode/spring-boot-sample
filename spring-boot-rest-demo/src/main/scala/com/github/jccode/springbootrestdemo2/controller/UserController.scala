@@ -1,6 +1,7 @@
 package com.github.jccode.springbootrestdemo2.controller
 
 import com.github.jccode.springbootrestdemo2.common.{RestResult, Success}
+import com.github.jccode.springbootrestdemo2.exception.RestException
 import com.github.jccode.springbootrestdemo2.model.User
 import com.github.jccode.springbootrestdemo2.service.UserService
 import com.google.common.base.Preconditions
@@ -13,10 +14,10 @@ class UserController (@Autowired val userService: UserService) {
 
   @RequestMapping(value = Array("/{name}"), method = Array(RequestMethod.GET))
   def find(@PathVariable name: String): RestResult[User] = {
-//    Preconditions.checkNotNull(name)
-    val user = userService.find(user)
+    Preconditions.checkNotNull(name)
+    val user = userService.find(name)
     if (user == null) {
-
+      throw new RestException("user not exist")
     }
     new Success[User](user)
   }
