@@ -1,4 +1,4 @@
-package com.github.jccode.springbootrestdemo2.exception
+package com.github.jccode.springbootrestdemo.exception
 
 class RestException(message: String, cause: Throwable) extends RuntimeException(message, cause) {
   def this(message: String) = this(message, null)

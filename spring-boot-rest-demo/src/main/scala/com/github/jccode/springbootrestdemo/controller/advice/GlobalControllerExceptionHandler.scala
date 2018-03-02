@@ -1,9 +1,9 @@
-package com.github.jccode.springbootrestdemo2.controller.advice
+package com.github.jccode.springbootrestdemo.controller.advice
 
 import javax.servlet.http.HttpServletRequest
 
+import com.github.jccode.springbootrestdemo.common.Failed
 import com.github.jccode.springbootrestdemo.exception.RestException
-import com.github.jccode.springbootrestdemo2.common.Failed
 import org.springframework.web.bind.annotation.{ControllerAdvice, ExceptionHandler, ResponseBody}
 
 @ControllerAdvice

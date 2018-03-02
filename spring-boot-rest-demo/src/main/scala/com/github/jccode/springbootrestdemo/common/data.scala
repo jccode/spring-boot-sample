@@ -1,8 +1,9 @@
-package com.github.jccode.springbootrestdemo2.common
+package com.github.jccode.springbootrestdemo.common
 
+import scala.beans.BeanProperty
 import scala.collection.immutable.HashMap
 
-class RestResult[T](val error: Boolean, val payload: T, var meta: Map[String, String]) {
+class RestResult[T](@BeanProperty val error: Boolean, @BeanProperty val payload: T, @BeanProperty var meta: Map[String, String]) {
 
   def addMeta(key: String, value: String): Unit = {
     if (meta == null) meta = new HashMap[String, String]

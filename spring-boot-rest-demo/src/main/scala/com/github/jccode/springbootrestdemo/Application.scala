@@ -1,4 +1,4 @@
-package com.github.jccode.springbootrestdemo2
+package com.github.jccode.springbootrestdemo
 
 
 import org.springframework.boot.{CommandLineRunner, SpringApplication}

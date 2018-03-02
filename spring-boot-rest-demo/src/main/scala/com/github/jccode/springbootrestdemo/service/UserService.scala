@@ -1,6 +1,6 @@
-package com.github.jccode.springbootrestdemo2.service
+package com.github.jccode.springbootrestdemo.service
 
-import com.github.jccode.springbootrestdemo2.model.User
+import com.github.jccode.springbootrestdemo.model.User
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,5 +11,5 @@ class UserService {
     "tom" -> User(2, "tom", "cat", 10),
   )
 
-  def find(name: String): User = userMap(name)
+  def find(name: String): Option[User] = userMap.get(name)
 }

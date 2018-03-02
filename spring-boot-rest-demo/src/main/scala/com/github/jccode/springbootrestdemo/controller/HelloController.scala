@@ -1,4 +1,4 @@
-package com.github.jccode.springbootrestdemo2.controller
+package com.github.jccode.springbootrestdemo.controller
 
 import org.springframework.web.bind.annotation.{RequestMapping, RestController}
 
