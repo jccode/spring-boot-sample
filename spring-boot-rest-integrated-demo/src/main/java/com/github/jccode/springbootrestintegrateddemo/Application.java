@@ -8,14 +8,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan("com.github.jccode.springbootrestintegrateddemo.repo")
 public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(com.github.jccode.springbootrestintegrateddemo2.Application.class, args);
     }
 
     @Autowired
