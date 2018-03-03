@@ -9,7 +9,7 @@ class CrudServiceImpl[T <: BaseEntity](val mapper: CrudMapper[T]) extends CrudSe
   override def find(id: Int): T = mapper.selectByPrimaryKey(id)
 
   override def save(t: T): Int = {
-    if (t.id == null || t.id == 0) {
+    if (t == null || t.id == 0) {
       val now = new Date()
       t.createTime = now
       t.updateTime = now

@@ -4,9 +4,11 @@ import java.util.Date
 
 import scala.beans.BeanProperty
 
-case class BaseEntity (@BeanProperty var id: Int,
-                       @BeanProperty var createTime: Date,
-                       @BeanProperty var updateTime: Date
-                      ) extends Serializable {
+class BaseEntity extends Serializable {
+
+  @BeanProperty var id: Integer = _
+  @BeanProperty var createTime: Date = _
+  @BeanProperty var updateTime: Date = _
+
 
 }
