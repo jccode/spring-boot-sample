@@ -1,4 +1,4 @@
-package com.github.jccode.springbootrestintegrateddemo2
+package com.github.jccode.springbootrestintegrateddemo
 
 import org.mybatis.spring.annotation.MapperScan
 import org.springframework.boot.SpringApplication

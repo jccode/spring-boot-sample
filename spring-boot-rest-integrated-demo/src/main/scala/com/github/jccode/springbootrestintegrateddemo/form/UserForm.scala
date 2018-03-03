@@ -1,4 +1,4 @@
-package com.github.jccode.springbootrestintegrateddemo2.form
+package com.github.jccode.springbootrestintegrateddemo.form
 
 import javax.validation.constraints.{Min, NotNull, Size}
 

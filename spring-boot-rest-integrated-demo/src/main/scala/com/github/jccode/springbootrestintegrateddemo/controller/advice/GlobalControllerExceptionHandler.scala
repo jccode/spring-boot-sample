@@ -1,4 +1,4 @@
-package com.github.jccode.springbootsample.core.web
+package com.github.jccode.springbootrestintegrateddemo.controller.advice
 
 import javax.servlet.http.HttpServletRequest
 
@@ -11,6 +11,6 @@ class GlobalControllerExceptionHandler {
 
   @ResponseBody
   @ExceptionHandler(Array(classOf[RestException]))
-  def restException(e: Exception, request: HttpServletRequest): RestResult[Nothing, Nothing] =
-    RestResult.fail(e.getMessage)
+  def restException(e: Exception, request: HttpServletRequest): RestResult[Nothing, Nothing] = RestResult.fail(e.getMessage)
+
 }
