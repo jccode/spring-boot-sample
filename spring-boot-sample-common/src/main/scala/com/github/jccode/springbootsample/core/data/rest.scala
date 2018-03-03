@@ -27,7 +27,7 @@ sealed class RestResult[+R, +T](@BeanProperty val isError: Boolean, @BeanPropert
 }
 
 case class RestSuccess[+R](override val payload: Option[R]) extends RestResult[R, Nothing](false, payload, None)
-case class RestFailed[+T](code: ErrorCode , message: String, data: Option[T])
+case class RestFailed[+T](private val code: ErrorCode , private val message: String, private val data: Option[T])
   extends RestResult[Nothing, T](true, None, Some(new Error[T](code, message, data)))
 
 /*

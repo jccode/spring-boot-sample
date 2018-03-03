@@ -3,7 +3,6 @@ package com.github.jccode.springbootrestintegrateddemo.controller
 import com.github.jccode.springbootrestintegrateddemo.form.UserForm
 import com.github.jccode.springbootrestintegrateddemo.model.User
 import com.github.jccode.springbootrestintegrateddemo.service.UserService
-import org.assertj.core.util.Lists
 import org.hamcrest.Matchers.{is, iterableWithSize}
 import org.junit.{Before, Test}
 import org.junit.runner.RunWith
@@ -16,6 +15,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.{get, post}
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.{content, jsonPath, status}
 
 @RunWith(classOf[SpringRunner])
@@ -60,6 +60,7 @@ class UserControllerTest {
       .andExpect(status.isOk)
       .andExpect(content.contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("isError", is(true)))
+
   }
 
   @Test
@@ -70,13 +71,14 @@ class UserControllerTest {
       .andExpect(content.contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("isError", is(true)))
       .andExpect(jsonPath("error.data", iterableWithSize(3)))
+//      .andDo(MockMvcResultHandlers.print())
   }
 
   @Test
   @throws[Exception]
   def registerSuccess(): Unit = {
     val name = "testname"
-    val userForm: UserForm = UserForm(name, "111111", 20)
+    val userForm: UserForm = new UserForm(name, "111111", 20)
 //    userForm.setName(name)
 //    userForm.setAge(20)
 //    userForm.setPassword("111111")
