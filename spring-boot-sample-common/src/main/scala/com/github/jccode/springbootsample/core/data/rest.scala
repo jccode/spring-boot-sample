@@ -46,9 +46,9 @@ class RestResult[R >: Null, F >: Null](@BeanProperty val isError: Boolean, @Bean
 
 object RestResult {
 
-  def success[R >: Null](payload: R): RestResult[R, Null] = new RestResult[R, Null](false, payload)
+  def success[R >: Null, F >: Null](payload: R): RestResult[R, F] = new RestResult[R, F](false, payload)
 
-  def fail(message: String): RestResult[Null, Null] = new RestResult[Null, Null](true, Error(message))
+  def fail[R >: Null, F >: Null](message: String): RestResult[Null, Null] = new RestResult[Null, Null](true, Error(message))
 
   def fail[F >: Null](message: String, data: F) = new RestResult[Null, F](true, Error(message, data))
 

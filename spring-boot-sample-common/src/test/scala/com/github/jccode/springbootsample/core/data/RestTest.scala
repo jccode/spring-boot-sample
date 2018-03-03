@@ -28,4 +28,15 @@ class RestTest extends FlatSpec with Matchers {
     tranRet2 should equal(null)
   }
 
+  /*
+  "Explicit type" should "supported" in {
+    var result: RestResult[Double, Int] = null
+    result = RestResult.success[Double, Int](10.0)
+    result.payload should be (10.0)
+    result.isError should be (false)
+    result.error should be (null)
+
+  }
+  */
+
 }
