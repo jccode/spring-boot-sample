@@ -16,7 +16,7 @@ class UserController (@Autowired val userService: UserService) {
   def find(@PathVariable name: String): RestResult[User] = {
     Preconditions.checkNotNull(name)
     val user = userService.find(name)
-    if (user == None) {
+    if (user.isEmpty) {
       throw new RestException("user not exist")
     }
     new Success[User](user.get)
