@@ -13,6 +13,6 @@ class EventConsumer {
   @KafkaListener(topics = Array(Constant.EventTopic))
   def listenEvents(record: ConsumerRecord[String, Event]): Unit = {
     val value = record.value()
-    logger.info(s"Receive event: ${value.`type`}, ${value.payload}")
+    logger.info(s"Receive event: ${value.eventType}, ${value.payload}")
   }
 }

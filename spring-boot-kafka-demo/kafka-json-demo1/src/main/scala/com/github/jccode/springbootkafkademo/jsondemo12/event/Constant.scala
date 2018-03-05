@@ -2,6 +2,6 @@ package com.github.jccode.springbootkafkademo.jsondemo12.event
 
 object Constant {
 
-  val EventTopic = "EventTopic"
+  final val EventTopic = "EventTopic"
 
 }
