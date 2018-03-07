@@ -14,7 +14,7 @@ class Publisher {
   @Autowired
   private val template: KafkaTemplate[String, _] = null
 
-  def send(message: Message[_]): (ListenableFuture[SendResult[String, _]]) = template.send(message)
+  def send(message: Message[_]): ListenableFuture[SendResult[String, _]] = template.send(message)
 
   def send[T](topic: String, t: T): ListenableFuture[SendResult[String, _]] = {
     val message: Message[T] = MessageBuilder.withPayload(t).setHeader(KafkaHeaders.TOPIC, topic).build()

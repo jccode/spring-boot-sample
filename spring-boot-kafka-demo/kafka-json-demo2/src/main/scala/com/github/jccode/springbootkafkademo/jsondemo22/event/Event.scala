@@ -2,28 +2,14 @@ package com.github.jccode.springbootkafkademo.jsondemo22.event
 
 import java.util.UUID
 
+import scala.beans.BeanProperty
 
-class Event[T] extends Serializable {
 
-  var uuid: String = _
+class Event[T](@BeanProperty val uuid: String,
+               @BeanProperty val eventType: String,
+               @BeanProperty val payload: T) extends Serializable {
 
-  var eventType: String = _
-
-  var payload: T = _
-
-  def this(uuid: String, eventType: String, payload: T) = {
-    this()
-    this.uuid = uuid
-    this.eventType = eventType
-    this.payload = payload
-  }
-
-  def this(eventType: String, payload: T) = {
-    this()
-    this.uuid = UUID.randomUUID.toString
-    this.eventType = eventType
-    this.payload = payload
-  }
+  def this(eventType: String, payload: T) = this(UUID.randomUUID.toString, eventType, payload)
 
   override def toString = s"Event($uuid, $eventType, $payload)"
 }
