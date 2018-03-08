@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.jsondemo22.event
+package com.github.jccode.springbootkafkademo.jsondemo2.event
 
 import java.util.UUID
 
@@ -8,6 +8,9 @@ import scala.beans.BeanProperty
 class Event[T](@BeanProperty val uuid: String,
                @BeanProperty val eventType: String,
                @BeanProperty val payload: T) extends Serializable {
+
+  // 无参构造器, java中反射用.
+  def this() = this(null, null, null.asInstanceOf[T])
 
   def this(eventType: String, payload: T) = this(UUID.randomUUID.toString, eventType, payload)
 

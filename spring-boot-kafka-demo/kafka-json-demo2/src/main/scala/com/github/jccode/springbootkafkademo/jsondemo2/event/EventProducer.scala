@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.jsondemo22.event
+package com.github.jccode.springbootkafkademo.jsondemo2.event
 
 import java.util
 
@@ -22,15 +22,27 @@ class EventProducer(@Autowired private val publisher: Publisher) {
       for (j <- 1 to i) {
         tokens += j.toString
       }
+
+      // 进入kafka之前要转成java的集合类型.
       val tokenEvent: Event[util.List[String]] = Event("tokens", tokens.asJava)
-      val value: ListenableFuture[SendResult[String, _]] = publisher.send(Constant.EventTopic, i.toString, tokenEvent)
-      val successCallback: SuccessCallback[SendResult[String, _]] = (r: SendResult[String, _]) => {
+
+      /*
+      val value: ListenableFuture[SendResult[String, String]] = publisher.send(Constant.EventTopic, i.toString, tokenEvent)
+      val successCallback: SuccessCallback[SendResult[String, String]] = (r: SendResult[String, String]) => {
         log.info(s"Producer send success. ${r.getProducerRecord} | ${r.getRecordMetadata}")
+
       }
       val failureCallback: FailureCallback = (e: Throwable) => {
         log.info(s"Producer send failed. ${e.getMessage}")
       }
       value.addCallback(successCallback, failureCallback)
+      */
+
+      // scala 支持SAM转换.
+      publisher.send(Constant.EventTopic, i.toString, tokenEvent).addCallback(
+        (r: SendResult[String, String]) => log.info(s"Producer send success. ${r.getProducerRecord} | ${r.getRecordMetadata}"),
+        (e: Throwable) => log.info(s"Producer send failed. ${e.getMessage}")
+      )
     }
   }
 

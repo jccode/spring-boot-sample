@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.jsondemo12.config
+package com.github.jccode.springbootkafkademo.jsondemo1.config
 
 import java.util
 

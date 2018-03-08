@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.jsondemo22.event
+package com.github.jccode.springbootkafkademo.jsondemo2.event
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.kafka.core.KafkaTemplate
@@ -12,16 +12,16 @@ import org.springframework.util.concurrent.ListenableFuture
 class Publisher {
 
   @Autowired
-  private val template: KafkaTemplate[String, _] = null
+  private val template: KafkaTemplate[String, String] = null  // 类型为 [String, String] 由spring注入(application.scala中定义).
 
-  def send(message: Message[_]): ListenableFuture[SendResult[String, _]] = template.send(message)
+  def send[T](message: Message[T]): ListenableFuture[SendResult[String, String]] = template.send(message)
 
-  def send[T](topic: String, t: T): ListenableFuture[SendResult[String, _]] = {
+  def send[T](topic: String, t: T): ListenableFuture[SendResult[String, String]] = {
     val message: Message[T] = MessageBuilder.withPayload(t).setHeader(KafkaHeaders.TOPIC, topic).build()
     send(message)
   }
 
-  def send[T](topic: String, key: String, t: T): ListenableFuture[SendResult[String, _]] = {
+  def send[T](topic: String, key: String, t: T): ListenableFuture[SendResult[String, String]] = {
     val message: Message[T] = MessageBuilder.withPayload(t).setHeader(KafkaHeaders.TOPIC, topic).setHeader(KafkaHeaders.MESSAGE_KEY, key).build()
     send(message)
   }

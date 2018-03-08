@@ -1,6 +1,6 @@
-package com.github.jccode.springbootkafkademo.jsondemo22
+package com.github.jccode.springbootkafkademo.jsondemo2
 
-import com.github.jccode.springbootkafkademo.jsondemo22.event.EventProducer
+import com.github.jccode.springbootkafkademo.jsondemo2.event.EventProducer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.{CommandLineRunner, SpringApplication}
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -31,7 +31,8 @@ class Application {
   @Autowired
   val producer: EventProducer = null
 
-  def commandLineRunner() = new CommandLineRunner {
+  @Bean
+  def commandLineRunner(): CommandLineRunner = new CommandLineRunner {
     override def run(strings: String*): Unit = {
       producer.produceEvents1()
       producer.produceEvents2()

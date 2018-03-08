@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.jsondemo12.event
+package com.github.jccode.springbootkafkademo.jsondemo1.event
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.kafka.core.KafkaTemplate

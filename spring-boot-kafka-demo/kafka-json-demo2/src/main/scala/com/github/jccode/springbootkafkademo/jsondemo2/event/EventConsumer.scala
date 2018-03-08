@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.jsondemo22.event
+package com.github.jccode.springbootkafkademo.jsondemo2.event
 
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener

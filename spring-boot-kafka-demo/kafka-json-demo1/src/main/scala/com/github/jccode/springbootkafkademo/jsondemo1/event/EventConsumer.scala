@@ -1,4 +1,4 @@
-package com.github.jccode.springbootkafkademo.jsondemo12.event
+package com.github.jccode.springbootkafkademo.jsondemo1.event
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.{Logger, LoggerFactory}
