@@ -1,7 +1,9 @@
 package com.github.jccode.springbootsample.core.data
 
-import scala.beans.BeanProperty
+import com.fasterxml.jackson.core.`type`.TypeReference
+import com.fasterxml.jackson.module.scala.JsonScalaEnumeration
 
+import scala.beans.BeanProperty
 
 
 object ErrorCode extends Enumeration {
@@ -10,10 +12,10 @@ object ErrorCode extends Enumeration {
   val NO_DATA = Value(100)
   val AUTH_ERROR = Value(200)
 }
-
+class ErrorCodeType extends TypeReference[ErrorCode.type]
 
 import com.github.jccode.springbootsample.core.data.ErrorCode.ErrorCode
-class Error[+T](@BeanProperty val code: ErrorCode, @BeanProperty val message: String, @BeanProperty val data: Option[T])
+class Error[+T](@BeanProperty @JsonScalaEnumeration(classOf[ErrorCodeType]) val code: ErrorCode, @BeanProperty val message: String, @BeanProperty val data: Option[T])
 
 object Error {
   def apply[T](message: String): Error[T] = new Error[T](ErrorCode.NONE, message, None)
