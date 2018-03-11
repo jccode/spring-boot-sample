@@ -6,6 +6,7 @@ import com.github.jccode.springbootrestintegrateddemo.form.UserForm
 import com.github.jccode.springbootrestintegrateddemo.model.User
 import com.github.jccode.springbootrestintegrateddemo.service.UserService
 import com.github.jccode.springbootsample.core.data.RestResult
+import com.github.jccode.springbootsample.core.data.RestResult.RestSuccess
 import com.github.jccode.springbootsample.core.exception.RestException
 import com.google.common.base.Preconditions
 import org.springframework.beans.BeanUtils
@@ -28,6 +29,10 @@ class UserController (@Autowired userService: UserService) {
     RestResult(users.head)
   }
 
+  @GetMapping
+  def list(): RestSuccess[List[User]] = {
+    RestResult(userService.findAll())
+  }
 
   @PostMapping(Array("/register"))
   def register(@Valid userForm: UserForm, result: BindingResult): RestResult[User, List[String]] = {
