@@ -59,4 +59,23 @@ class RestTest extends FlatSpec with Matchers  {
     ret2.payload should be (None)
     ret2.error.get.message should be (errMsg)
   }
+
+  it should "transform option automatically" in {
+    import com.github.jccode.springbootsample.core.data.Implicits._
+    var opt: Option[Int] = Some(3)
+    val errMsg = "Failed get value"
+    val v1 = opt.restResult(errMsg)
+    v1.isError should be (false)
+    v1.payload should be (opt)
+
+    opt = None
+    val v2 = opt.restResult(errMsg)
+    v2.isError should be (true)
+    v2.error.get.message should be (errMsg)
+
+    implicit val errMsg2: String = "Implicit error message"
+    val v3 = opt.restResult
+    v3.isError should be (true)
+    v3.error.get.message should be (errMsg2)
+  }
 }

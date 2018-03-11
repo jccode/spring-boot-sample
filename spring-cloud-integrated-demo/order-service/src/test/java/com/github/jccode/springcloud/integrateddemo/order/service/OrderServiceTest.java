@@ -1,7 +1,8 @@
 package com.github.jccode.springcloud.integrateddemo.order.service;
 
-import com.github.jccode.springcloud.integrateddemo.account.api.AccountAPI;
-import com.github.jccode.springcloud.integrateddemo.order.model.Order;
+import com.github.jccode.springcloud.integrateddemo.account2.api.AccountAPI;
+import com.github.jccode.springcloud.integrateddemo.order2.model.Order;
+import com.github.jccode.springcloud.integrateddemo.order2.service.OrderService;
 import com.github.jccode.springcloud.integrateddemo.user.api.UserAPI;
 import org.junit.Test;
 import org.junit.runner.RunWith;

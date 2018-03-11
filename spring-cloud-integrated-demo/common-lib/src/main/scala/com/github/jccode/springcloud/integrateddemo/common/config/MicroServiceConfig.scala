@@ -8,9 +8,9 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients
 import org.springframework.context.annotation.{ComponentScan, Import}
 
 @EnableDiscoveryClient
-@EnableFeignClients("com.github.jccode.springcloud.integrateddemo.*.api")
+@EnableFeignClients(Array("com.github.jccode.springcloud.integrateddemo.*.api"))
 @EnableCircuitBreaker
-@MapperScan("com.github.jccode.springcloud.integrateddemo.**.*.repo")
+@MapperScan(Array("com.github.jccode.springcloud.integrateddemo.**.*.repo"))
 @ComponentScan(Array("com.github.jccode.springcloud.integrateddemo.*.api"))
 @Import(Array(classOf[WebConfig]))
 class MicroServiceConfig {

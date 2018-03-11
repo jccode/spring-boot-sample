@@ -2,6 +2,7 @@ package com.github.jccode.springbootsample.core.data
 
 import com.fasterxml.jackson.core.`type`.TypeReference
 import com.fasterxml.jackson.module.scala.JsonScalaEnumeration
+import com.github.jccode.springbootsample.core.data.RestResult.RestSuccess
 
 import scala.beans.BeanProperty
 
@@ -14,6 +15,7 @@ object ErrorCode extends Enumeration {
 }
 class ErrorCodeType extends TypeReference[ErrorCode.type]
 
+
 import com.github.jccode.springbootsample.core.data.ErrorCode.ErrorCode
 class Error[+T](@BeanProperty @JsonScalaEnumeration(classOf[ErrorCodeType]) val code: ErrorCode, @BeanProperty val message: String, @BeanProperty val data: Option[T])
 
@@ -22,7 +24,6 @@ object Error {
   def apply[T](code: ErrorCode, message: String): Error[T] = new Error[T](code, message, None)
   def apply[T](message: String, data: T): Error[T] = new Error[T](ErrorCode.NONE, message, Option(data))
 }
-
 
 
 sealed class RestResult[+R, +T](@BeanProperty val isError: Boolean, @BeanProperty val payload: Option[R], @BeanProperty val error: Option[Error[T]]) {
@@ -64,4 +65,15 @@ object RestResult {
   def apply[R, T](payload: R, message: String, data: T): RestResult[R, T] =
     if (payload == null) fail(message, data) else success[R](payload)
 
+}
+
+
+class RichOption[+A](val option: Option[A]) {
+  def restResult(implicit message: String): RestSuccess[A] =
+    if (option.isEmpty) RestResult.fail(message) else RestResult.success(option.get)
+}
+
+
+object Implicits {
+  implicit def option2RichOption[A](option: Option[A]): RichOption[A] = new RichOption[A](option)
 }
