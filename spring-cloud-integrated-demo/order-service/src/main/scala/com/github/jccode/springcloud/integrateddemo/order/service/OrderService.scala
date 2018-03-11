@@ -25,6 +25,7 @@ class OrderService(@Autowired override val mapper: OrderMapper) extends CrudServ
   def reserveOrder(orderForm: OrderForm): Order = {
     val usrId = orderForm.getUserId
     val result = accountClient.getBalance(usrId)
+    // TODO what if error occur? 抛异常? 抛完呢? 进熔断?
     if (!result.isError) {
       val balance = result.payload.get
       println(s"usr ${usrId} 's balance is ${balance}")
