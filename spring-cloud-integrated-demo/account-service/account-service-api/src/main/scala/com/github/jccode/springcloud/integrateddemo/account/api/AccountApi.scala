@@ -1,4 +1,4 @@
-package com.github.jccode.springcloud.integrateddemo.account
+package com.github.jccode.springcloud.integrateddemo.account.api
 
 import com.github.jccode.springbootsample.core.data.RestResult.RestSuccess
 import org.springframework.cloud.netflix.feign.FeignClient
