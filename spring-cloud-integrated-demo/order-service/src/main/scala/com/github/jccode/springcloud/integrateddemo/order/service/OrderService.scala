@@ -29,6 +29,8 @@ class OrderService(@Autowired override val mapper: OrderMapper) extends CrudServ
     if (!result.isError) {
       val balance = result.payload.get
       println(s"usr ${usrId} 's balance is ${balance}")
+    } else {
+      println("call account api error: " + result.getError.map(_.message))
     }
     // TODO 查产品的价格,看余额是否足够支付
 

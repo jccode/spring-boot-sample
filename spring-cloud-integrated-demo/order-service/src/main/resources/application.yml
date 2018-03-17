@@ -10,3 +10,8 @@ spring:
     schema: classpath:db/hsqldb/schema.sql
     data: classpath:db/hsqldb/data.sql
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
+logging:
+  level:
+    ROOT: INFO
+    com.github.jccode.springcloud.integrateddemo.account.api.AccountApi: DEBUG
+
