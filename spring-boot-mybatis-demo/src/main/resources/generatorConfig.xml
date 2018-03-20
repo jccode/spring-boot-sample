@@ -44,16 +44,16 @@
             <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper"/>
         </javaClientGenerator>
 
-        <table tableName="user" domainObjectName="User">
+        <table tableName="user" domainObjectName="User" alias="u">
             <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;User&gt;" />
         </table>
-        <table tableName="orders" domainObjectName="Order">
+        <table tableName="orders" domainObjectName="Order" alias="o">
             <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;Order&gt;" />
         </table>
-        <table tableName="order_detail" domainObjectName="OrderDetail">
+        <table tableName="order_detail" domainObjectName="OrderDetail" alias="d">
             <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;OrderDetail&gt;" />
         </table>
-        <table tableName="product" domainObjectName="Product">
+        <table tableName="product" domainObjectName="Product" alias="p">
             <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;Product&gt;" />
         </table>
 

@@ -8,9 +8,12 @@ spring:
     driver-class-name: org.hsqldb.jdbcDriver
     schema: classpath:db/hsqldb/schema.sql
     data: classpath:db/hsqldb/data.sql
-  jpa:
+#  jpa:
 #    generate-ddl: true
-    show-sql: true
+#    show-sql: true
 #    hibernate:
 #      ddl-auto: update
-
+logging:
+  level:
+    root: info
+    com.github.jccode: debug

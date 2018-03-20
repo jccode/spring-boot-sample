@@ -38,7 +38,8 @@ class OrderMapperTest extends Matchers {
     val criteria = new OrderCriteria
     criteria.createCriteria().andNoEqualTo("1001")
     val list = orderService.findOrderExt(criteria)
-    println(list)
-    list.size should be >=0
+    list.size should be (1)
+    val order = list(0)
+    order.getDetails.size() should be (2)
   }
 }
