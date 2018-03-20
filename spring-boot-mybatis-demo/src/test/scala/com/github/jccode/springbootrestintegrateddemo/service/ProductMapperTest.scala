@@ -9,19 +9,23 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.junit4.SpringRunner
 
+/**
+  * ProductMapperTest
+  *
+  * @author 01372461
+  */
 @RunWith(classOf[SpringRunner])
 @SpringBootTest
 @MybatisTest
-@Import(Array(classOf[UserService]))
-class UserMapperTest extends Matchers {
+@Import(Array(classOf[ProductService]))
+class ProductMapperTest extends Matchers {
 
   @Autowired
-  val userService: UserService = null
+  val productService: ProductService = null;
 
   @Test
-  def findUser(): Unit = {
-    val user = userService.find(1)
-    user.getName should be("bob")
-    user.getAge should be(18)
+  def findProduct(): Unit = {
+    val user = productService.find(1)
+    println(user)
   }
 }

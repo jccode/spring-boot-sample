@@ -9,19 +9,31 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.junit4.SpringRunner
 
+/**
+  * OrderMapperTest
+  *
+  * @author 01372461
+  */
 @RunWith(classOf[SpringRunner])
 @SpringBootTest
 @MybatisTest
-@Import(Array(classOf[UserService]))
-class UserMapperTest extends Matchers {
+@Import(Array(classOf[OrderService]))
+class OrderMapperTest extends Matchers {
 
   @Autowired
-  val userService: UserService = null
+  val orderService: OrderService = null
 
   @Test
-  def findUser(): Unit = {
-    val user = userService.find(1)
-    user.getName should be("bob")
-    user.getAge should be(18)
+  def findOrderAndUser(): Unit = {
+    val list = orderService.findOrderAndUsers(null)
+    println(list)
+    list.size should be >= 0
+  }
+
+  @Test
+  def findOrderExt(): Unit = {
+    val list = orderService.findOrderExt(null)
+    println(list)
+    list.size should be >=0
   }
 }

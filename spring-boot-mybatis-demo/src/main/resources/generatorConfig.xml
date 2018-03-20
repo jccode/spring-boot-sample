@@ -47,6 +47,15 @@
         <table tableName="user" domainObjectName="User">
             <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;User&gt;" />
         </table>
+        <table tableName="orders" domainObjectName="Order">
+            <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;Order&gt;" />
+        </table>
+        <table tableName="order_detail" domainObjectName="OrderDetail">
+            <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;OrderDetail&gt;" />
+        </table>
+        <table tableName="product" domainObjectName="Product">
+            <property name="rootInterface" value="com.github.jccode.springbootsample.core.repo.CrudMapper&lt;Product&gt;" />
+        </table>
 
     </context>
 
