@@ -295,21 +295,19 @@
   <resultMap id="OrderExt" type="com.github.jccode.springbootrestintegrateddemo.model.OrderExt" extends="BaseResultMap">
     <result column="NAME" jdbcType="VARCHAR" property="userName" />
     <result column="AGE" jdbcType="INTEGER" property="age" />
-    <association column="id" javaType="com.github.jccode.springbootrestintegrateddemo.model.User" property="user"
+    <association column="user_id" javaType="com.github.jccode.springbootrestintegrateddemo.model.User" property="user"
                  resultMap="com.github.jccode.springbootrestintegrateddemo.repo.UserMapper.BaseResultMap" />
-    <collection property="details" ofType="com.github.jccode.springbootrestintegrateddemo.model.OrderDetailExt" column="orders_id"
+    <collection property="details" ofType="com.github.jccode.springbootrestintegrateddemo.model.OrderDetailExt"
                 resultMap="com.github.jccode.springbootrestintegrateddemo.repo.OrderDetailMapper.OrderDetailExt">
-      <id column="detailId" property="id"/>
     </collection>
   </resultMap>
 
   <select id="findOrderExt" parameterType="com.github.jccode.springbootrestintegrateddemo.model.OrderCriteria" resultMap="OrderExt">
-    select o.*, u.*, d.*, p.*,
-      d.id as detailId
+    select o.*, u.*, d.*, p.*
     from orders o
     left join user u on o.user_id = u.id
-    join order_detail d on d.orders_id = o.id
-    join product p on p.id = d.product_id
+    left join order_detail d on d.orders_id = o.id
+    left join product p on p.id = d.product_id
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>

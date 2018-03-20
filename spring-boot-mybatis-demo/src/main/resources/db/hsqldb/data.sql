@@ -9,7 +9,7 @@ INSERT INTO orders VALUES (1, 1, '1001', 'bob order 1');
 INSERT INTO orders VALUES (2, 1, '1002', 'bob order 2');
 INSERT INTO orders VALUES (3, 2, '2001', 'tom order 1');
 INSERT INTO orders VALUES (4, 2, '2002', 'tom order 2');
-INSERT INTO orders VALUES (5, 2, '2002', 'tom order 3');
+INSERT INTO orders VALUES (5, 2, '2003', 'tom order 3');
 
 INSERT INTO order_detail VALUES (1, 1, 1, 1);
 INSERT INTO order_detail VALUES (2, 1, 2, 2);

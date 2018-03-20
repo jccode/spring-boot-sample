@@ -17,5 +17,6 @@ import scala.collection.JavaConverters._
 class OrderService(@Autowired override val mapper: OrderMapper) extends CrudServiceImpl[Order](mapper) {
 
   def findOrderAndUsers(example: OrderCriteria): Seq[OrderAndUser] = mapper.findOrderAndUsers(example).asScala
+
   def findOrderExt(example: OrderCriteria): Seq[OrderExt] = mapper.findOrderExt(example).asScala
 }
