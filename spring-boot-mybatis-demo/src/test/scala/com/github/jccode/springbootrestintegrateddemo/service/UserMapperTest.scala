@@ -1,5 +1,6 @@
 package com.github.jccode.springbootrestintegrateddemo.service
 
+import com.github.jccode.springbootrestintegrateddemo.model.UserCriteria
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest
@@ -23,5 +24,15 @@ class UserMapperTest extends Matchers {
     val user = userService.find(1)
     user.getName should be("bob")
     user.getAge should be(18)
+  }
+
+  @Test
+  def findUserWithOrders(): Unit = {
+    val criteria = new UserCriteria
+    criteria.createCriteria().andIdEqualTo(1)
+    val users = userService.findUserWithOrders(criteria)
+    users.size should be (1)
+    val user = users.head
+    user.orders.size() should be (2)
   }
 }

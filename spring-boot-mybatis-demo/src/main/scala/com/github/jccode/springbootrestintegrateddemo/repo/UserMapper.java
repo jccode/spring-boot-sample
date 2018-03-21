@@ -2,6 +2,7 @@ package com.github.jccode.springbootrestintegrateddemo.repo;
 
 import com.github.jccode.springbootrestintegrateddemo.model.User;
 import com.github.jccode.springbootrestintegrateddemo.model.UserCriteria;
+import com.github.jccode.springbootrestintegrateddemo.model.UserExt;
 import com.github.jccode.springbootsample.core.repo.CrudMapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -103,4 +104,8 @@ public interface UserMapper extends com.github.jccode.springbootsample.core.repo
      * @mbg.generated
      */
     int updateByPrimaryKey(User record);
+
+    // Custom functions
+
+    List<UserExt> findUserWithOrders(UserCriteria example);
 }

@@ -271,4 +271,31 @@
       order by ${orderByClause}
     </if>
   </select>
+
+
+  <!--   Custom SQLs -->
+  <resultMap id="UserExt" type="com.github.jccode.springbootrestintegrateddemo.model.UserExt" extends="BaseResultMap">
+    <collection property="orders" ofType="com.github.jccode.springbootrestintegrateddemo.model.OrderExt"
+                resultMap="com.github.jccode.springbootrestintegrateddemo.repo.OrderMapper.OrderExt">
+    </collection>
+  </resultMap>
+
+  <select id="findUserWithOrders" parameterType="com.github.jccode.springbootrestintegrateddemo.model.UserCriteria" resultMap="UserExt">
+    select
+    <include refid="Base_Column_List"/>,
+    <include refid="com.github.jccode.springbootrestintegrateddemo.repo.OrderMapper.Base_Column_List"/>,
+    <include refid="com.github.jccode.springbootrestintegrateddemo.repo.OrderDetailMapper.Base_Column_List"/>,
+    <include refid="com.github.jccode.springbootrestintegrateddemo.repo.ProductMapper.Base_Column_List"/>
+    from orders o
+    left join user u on o.user_id = u.id
+    left join order_detail d on d.orders_id = o.id
+    left join product p on p.id = d.product_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
 </mapper>

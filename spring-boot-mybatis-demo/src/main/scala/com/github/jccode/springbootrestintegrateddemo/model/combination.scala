@@ -28,3 +28,7 @@ class OrderExt extends Order {
 class OrderDetailExt extends OrderDetail {
   @BeanProperty var product: Product = _
 }
+
+class UserExt extends User {
+  @BeanProperty var orders: java.util.List[OrderExt] = _
+}
