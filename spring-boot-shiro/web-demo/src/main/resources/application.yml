@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: shiro-web-demo1
+shiro:
+  loginUrl: /login
+  unauthorizedUrl: /unauthrized
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.apache.shiro: DEBUG
