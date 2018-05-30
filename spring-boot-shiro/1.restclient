@@ -1,0 +1,42 @@
+
+# Get user by name
+GET http://127.0.0.1:10010/users?name=tom
+
+# Get user by id
+GET http://127.0.0.1:10010/users/1
+
+# u2
+GET http://127.0.0.1:10010/u2
+
+# Reserve order
+POST http://127.0.0.1:10040/reserve
+Content-Type: application/x-www-form-urlencoded
+
+userId=3&items[0].productId=1&items[0].amount=1
+
+# Balance
+GET http://127.0.0.1:10020/users/1/balance
+
+
+# ##############################
+# 
+# API Gateway
+# 
+# ##############################
+
+# Get user by name
+GET http://127.0.0.1:8080/user/tom
+
+# Reserve order
+POST http://127.0.0.1:8080/order/reserve
+Content-Type: application/x-www-form-urlencoded
+
+userId=1&items[0].productId=1&items[0].amount=1
+
+
+# 
+# spring boot rest integrated demo
+# 
+
+# Get user by name
+GET http://127.0.0.1:8080/user/tom
