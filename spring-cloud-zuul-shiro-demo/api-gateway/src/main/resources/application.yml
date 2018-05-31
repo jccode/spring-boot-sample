@@ -11,3 +11,10 @@ zuul:
     backend:
       path: /backend/**
       url: http://127.0.0.1:8081
+shiro:
+  loginUrl: /auth/login
+  unauthorizedUrl: /auth/unauthrized
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.apache.shiro: DEBUG

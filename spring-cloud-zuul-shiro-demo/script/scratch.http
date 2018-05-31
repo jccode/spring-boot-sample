@@ -1,0 +1,28 @@
+# auth | login
+POST http://127.0.0.1:8079/login
+
+<> 2018-06-01T125023.200.txt
+
+###
+
+# backend service | admin
+GET http://127.0.0.1:8081/admin
+
+<> 2018-05-31T105929.200.txt
+
+###
+
+# api-gateway | auth | login
+POST http://127.0.0.1:8080/auth/login
+
+<> 2018-06-01T010039.200.txt
+
+###
+
+# api-gateway | backend service | admin
+GET http://127.0.0.1:8080/backend/admin
+
+<> 2018-06-01T125939.403.json
+<> 2018-06-01T125112.200.txt
+
+###
