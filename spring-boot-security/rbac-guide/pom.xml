@@ -31,6 +31,17 @@
             <groupId>com.github.jccode</groupId>
             <artifactId>security-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

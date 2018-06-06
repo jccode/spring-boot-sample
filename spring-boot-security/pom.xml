@@ -26,6 +26,7 @@
         <scala.version>2.12.4</scala.version>
         <lombok.version>1.16.18</lombok.version>
         <csrf-token-filter.version>1.1</csrf-token-filter.version>
+        <guava.version>21.0</guava.version>
     </properties>
 
     <dependencyManagement>
@@ -63,6 +64,18 @@
                 <groupId>com.github.jccode</groupId>
                 <artifactId>security-common</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <scope>runtime</scope>
             </dependency>
 
         </dependencies>
