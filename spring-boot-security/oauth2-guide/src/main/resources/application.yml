@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: oauth2-guide
+logging:
+  level:
+    com.github.jccode: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+#security:
+#  user:
+#    name: tom
+#    password: cat

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>simple-guide</artifactId>
+    <artifactId>oauth2-guide</artifactId>
 
     <dependencies>
         <dependency>
@@ -25,11 +25,12 @@
         <dependency>
             <groupId>com.allanditzel</groupId>
             <artifactId>spring-security-csrf-token-filter</artifactId>
+            <version>1.1</version>
         </dependency>
 
         <dependency>
-            <groupId>com.github.jccode</groupId>
-            <artifactId>security-common</artifactId>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
         </dependency>
 
     </dependencies>
