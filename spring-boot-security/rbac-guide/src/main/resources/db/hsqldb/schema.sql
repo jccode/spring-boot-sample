@@ -1,8 +1,7 @@
 create table user (
   id int not null identity ,
   username varchar(64) not null ,
-  password varchar(64) not null ,
-  salt varchar(128) not null ,
+  password varchar(60) not null ,
   enabled boolean default true not null
 );
 

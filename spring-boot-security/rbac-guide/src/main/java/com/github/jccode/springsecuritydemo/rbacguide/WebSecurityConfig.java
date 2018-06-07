@@ -5,6 +5,7 @@ import com.github.jccode.springsecurity.common.authentication.RESTAuthentication
 import com.github.jccode.springsecurity.common.authentication.RESTAuthenticationFailureHandler;
 import com.github.jccode.springsecurity.common.authentication.RESTAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
@@ -12,6 +13,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 
@@ -47,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
+                .passwordEncoder(new BCryptPasswordEncoder())
                 .usersByUsernameQuery(SQL_users_by_username)
                 .authoritiesByUsernameQuery(SQL_roles_by_username)
                 .groupAuthoritiesByUsername(SQL_role_permissions_by_username);
@@ -74,4 +78,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         ;
         // @formatter:on
     }
+
 }
