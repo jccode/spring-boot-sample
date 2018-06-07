@@ -1,0 +1,41 @@
+
+:auth_tom = Authorization: Basic dG9tOmNhdA==
+:auth_admin = Authorization: Basic YWRtaW46YWRtaW4=
+:auth_lucy = Authorization: Basic bHVjeTpsdWNreQ==
+
+# home
+GET http://127.0.0.1:8080/
+
+# guest
+GET http://127.0.0.1:8080/guest
+
+# dashboard
+GET http://127.0.0.1:8080/dashboard
+
+# me
+GET http://127.0.0.1:8080/me
+:auth_tom
+
+# book list
+GET http://127.0.0.1:8080/book/list
+:auth_lucy
+
+# book reading
+GET http://127.0.0.1:8080/book/reading
+:auth_tom
+
+# user has role
+GET http://127.0.0.1:8080/user/has-role?role=user
+:auth_tom
+
+# user has permission
+GET http://127.0.0.1:8080/user/has-permission?perm=user:read
+:auth_lucy
+
+# admin
+GET http://127.0.0.1:8080/admin
+:auth_lucy
+
+# admin dashboard
+GET http://127.0.0.1:8080/admin/dashboard
+:auth_admin
