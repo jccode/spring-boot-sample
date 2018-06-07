@@ -1,5 +1,6 @@
 package com.github.jccode.springsecuritydemo.rbacguide.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,4 +21,10 @@ public class HomeController {
     public String dashboard() {
         return "dashboard";
     }
+
+    @GetMapping("/me")
+    public Authentication me(Authentication auth) {
+        return auth;
+    }
+
 }
