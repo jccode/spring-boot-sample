@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>simple-guide</module>
-        <module>oauth2-guide</module>
+        <module>oauth2-simplest-guide</module>
         <module>security-common</module>
         <module>rbac-guide</module>
         <module>zuul-demo</module>

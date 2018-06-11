@@ -1,0 +1,49 @@
+# variables
+
+:client_id := (setq client_id "733fd7b1-fc6d-45cf-b625-b29ff9479b0f")
+:client_secret := (setq client_secret "2c0b8b3a-71bc-4a6c-8cf0-3c9cda23b0d4")
+
+:username = user
+:password = 6fed94d3-30b4-40f9-bc6e-b2cf7cd4dca6
+
+:access_token := (setq access_token "2443517a-3c63-4b7c-85a0-36e96e2ddbdf")
+:refresh_token = 2c507e42-f817-4749-9577-1e3c9fa53226
+
+:auth_basic := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" client_id client_secret) t))
+:auth_bearer := (format "Authorization: Bearer %s" access_token)
+
+
+# grant_type: password, 
+POST http://127.0.0.1:8080/oauth/token?grant_type=password&username=:username&password=:password&client_id=:client_id&scope=all
+:auth_basic
+
+# grant_type: client credential,
+POST http://127.0.0.1:8080/oauth/token?grant_type=client_credentials&client_id=:client_id&client_secret=:client_secret&scope=read
+:auth_basic
+
+# app controller: admin
+GET http://127.0.0.1:8080/app/admin
+:auth_bearer
+
+# app controller: user
+GET http://127.0.0.1:8080/app/user
+:auth_bearer
+
+# app controller: guest
+GET http://127.0.0.1:8080/app/guest
+
+# grant_type: Authorization_code
+# DO THIS in browser, and get back the authorization_code
+GET http://127.0.0.1:8080/oauth/authorize?grant_type=code&client_id=:client_id&scope=email&response_type=code&redirect_uri=http://www.baidu.com
+Authorization: Basic dXNlcjphMjI3ZTZiOS05ZjAxLTQyNGEtOWM0NS1jMzJlMmJiN2I3OWY=
+
+# code
+:authorization_code = u5orkk
+
+# using authorization_code exchange access_code
+POST http://127.0.0.1:8080/oauth/token?grant_type=authorization_code&code=:authorization_code&client_id=:client_id&client_secret=:client_secret&scope=email&redirect_uri=http://www.baidu.com
+:auth_basic
+
+# grant_type: Implicit
+GET http://127.0.0.1:8080/oauth/authorize?response_type=token&client_id=:client_id&scope=email&redirect_uri=http://www.baidu.com
+Authorization: Basic dXNlcjphMjI3ZTZiOS05ZjAxLTQyNGEtOWM0NS1jMzJlMmJiN2I3OWY=
