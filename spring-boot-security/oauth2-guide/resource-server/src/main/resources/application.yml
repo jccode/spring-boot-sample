@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: oauth2-guide-resource-server
+
+logging:
+  level:
+    com.github.jccode: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG

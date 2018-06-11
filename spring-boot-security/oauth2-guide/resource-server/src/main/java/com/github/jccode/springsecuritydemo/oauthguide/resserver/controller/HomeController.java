@@ -1,4 +1,4 @@
-package com.github.jccode.springsecuritydemo.oauthguide.controller;
+package com.github.jccode.springsecuritydemo.oauthguide.resserver.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
