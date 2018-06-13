@@ -1,9 +1,24 @@
 spring:
   application:
     name: oauth2-guide-resource-server
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo?tinyInt1isBit=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: jc
+    password: jc
+    hikari:
+      connection-test-query: SELECT 1 FROM DUAL
+      minimum-idle: 3
+      maximum-pool-size: 24
+      pool-name: ${spring.application.name}-CP
+      idle-timeout: 10000
+      leakDetectionThreshold: 2000
 
 logging:
   level:
     com.github.jccode: DEBUG
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
+
+server:
+  port: 8081

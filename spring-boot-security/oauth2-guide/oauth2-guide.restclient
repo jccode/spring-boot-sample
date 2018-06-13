@@ -1,0 +1,31 @@
+# variables
+:client_id = webapp
+:client_secret = 
+
+:auth_basic = Authorization: Basic dXNlcjpiOTUzM2NiMS0zNWExLTRiMDYtOTc2MC1hMjhjMTQ4MTQxMGY=
+
+
+:client_id := (setq client_id "webapp")
+:client_secret := (setq client_secret "000000")
+
+:username = user
+:password = 6fed94d3-30b4-40f9-bc6e-b2cf7cd4dca6
+
+# grant_type: password, 
+POST http://127.0.0.1:8080/oauth/token?grant_type=password&username=:username&password=:password&client_id=:client_id&scope=all
+
+# grant_type: client credential,
+POST http://127.0.0.1:8080/oauth/token?grant_type=client_credentials&client_id=:client_id&client_secret=:client_secret&scope=read
+:auth_basic
+
+
+# app controller: admin
+GET http://127.0.0.1:8081/app/admin
+:auth_basic
+
+# app controller: user
+GET http://127.0.0.1:8081/app/user
+
+# app controller: guest
+GET http://127.0.0.1:8081/app/guest
+
