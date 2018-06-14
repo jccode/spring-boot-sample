@@ -14,6 +14,7 @@ public class PasswordEncoderGenerator {
         System.out.println(pwd("admin"));
         System.out.println(pwd("cat"));
         System.out.println(pwd("lucky"));
+        System.out.println(pwd("000000"));
     }
 
     private static String pwd(String password) {

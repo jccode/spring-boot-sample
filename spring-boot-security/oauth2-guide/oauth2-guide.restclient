@@ -1,27 +1,29 @@
 # variables
-:client_id = webapp
-:client_secret = 
-
-:auth_basic = Authorization: Basic dXNlcjpiOTUzM2NiMS0zNWExLTRiMDYtOTc2MC1hMjhjMTQ4MTQxMGY=
-
 
 :client_id := (setq client_id "webapp")
 :client_secret := (setq client_secret "000000")
 
-:username = user
-:password = 6fed94d3-30b4-40f9-bc6e-b2cf7cd4dca6
+:username := (setq username "user")
+:password := (setq password "c615572f-ce1d-460c-8b50-4fd0d15bedfc")
+
+:access_token := (setq access_token "c54fe027-ed2f-40a1-a1c1-badf479a1639")
+
+:auth_basic := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" username password) t))
+:auth_bearer := (format "Authorization: Bearer %s" access_token)
+
+:auth_basic_client_id := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" client_id client_secret) t))
 
 # grant_type: password, 
-POST http://127.0.0.1:8080/oauth/token?grant_type=password&username=:username&password=:password&client_id=:client_id&scope=all
+POST http://127.0.0.1:8080/oauth/token?grant_type=password&username=:client_id&password=:client_secret&client_id=:client_id&scope=all
+:auth_basic_client_id
 
 # grant_type: client credential,
 POST http://127.0.0.1:8080/oauth/token?grant_type=client_credentials&client_id=:client_id&client_secret=:client_secret&scope=read
-:auth_basic
-
+:auth_basic_client_id
 
 # app controller: admin
 GET http://127.0.0.1:8081/app/admin
-:auth_basic
+:auth_bearer
 
 # app controller: user
 GET http://127.0.0.1:8081/app/user
