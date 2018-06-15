@@ -13,8 +13,8 @@
         <module>oauth2-simplest-guide</module>
         <module>security-common</module>
         <module>rbac-guide</module>
-        <module>zuul-demo</module>
         <module>oauth2-guide</module>
+        <module>zuul-demo</module>
     </modules>
 
     <parent>
