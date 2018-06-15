@@ -1,6 +1,8 @@
 package com.github.jccode.springsecuritydemo.oauthguide.resserver.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,4 +29,8 @@ public class HomeController {
         return "guest!";
     }
 
+    @RequestMapping("/me")
+    public Authentication me(Authentication auth) {
+        return auth;
+    }
 }

@@ -2,6 +2,7 @@ package com.github.jccode.springsecuritydemo.oauthguide.authserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -19,6 +20,9 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource).passwordEncoder(passwordEncoder());
@@ -26,7 +30,11 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(new JdbcTokenStore(dataSource));
+        endpoints
+                .tokenStore(new JdbcTokenStore(dataSource))
+                // 必须注入 authenticationManager, 以支持 "password" GrantType.
+                .authenticationManager(authenticationManager);
+
     }
 
     private BCryptPasswordEncoder passwordEncoder() {
@@ -35,6 +43,8 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.passwordEncoder(passwordEncoder());
+        security
+                .passwordEncoder(passwordEncoder())
+                .allowFormAuthenticationForClients();
     }
 }

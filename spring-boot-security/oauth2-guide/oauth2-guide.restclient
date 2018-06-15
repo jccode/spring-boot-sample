@@ -4,22 +4,24 @@
 :client_secret := (setq client_secret "000000")
 
 :username := (setq username "user")
-:password := (setq password "c615572f-ce1d-460c-8b50-4fd0d15bedfc")
+:password := (setq password "0fee70bb-7d41-4972-8655-ef3dc790a793")
 
-:access_token := (setq access_token "c54fe027-ed2f-40a1-a1c1-badf479a1639")
+:access_token := (setq access_token "a0773258-f220-4e2a-a17c-ae2974c11bc0")
 
 :auth_basic := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" username password) t))
 :auth_bearer := (format "Authorization: Bearer %s" access_token)
 
 :auth_basic_client_id := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" client_id client_secret) t))
 
-# grant_type: password, 
-POST http://127.0.0.1:8080/oauth/token?grant_type=password&username=:client_id&password=:client_secret&client_id=:client_id&scope=all
-:auth_basic_client_id
 
 # grant_type: client credential,
 POST http://127.0.0.1:8080/oauth/token?grant_type=client_credentials&client_id=:client_id&client_secret=:client_secret&scope=read
 :auth_basic_client_id
+
+# grant_type: password, 
+POST http://127.0.0.1:8080/oauth/token?grant_type=password&username=:username&password=:password&client_id=:client_id&client_secret=:client_secret&scope=all
+:auth_basic_client_id
+
 
 # app controller: admin
 GET http://127.0.0.1:8081/app/admin
@@ -31,3 +33,23 @@ GET http://127.0.0.1:8081/app/user
 # app controller: guest
 GET http://127.0.0.1:8081/app/guest
 
+# app controller: me
+GET http://127.0.0.1:8081/app/me
+:auth_bearer
+
+
+# grant_type: Authorization_code
+# DO THIS in browser, and get back the authorization_code
+GET http://127.0.0.1:8080/oauth/authorize?grant_type=code&client_id=:client_id&client_secret=:client_secret&scope=read&response_type=code&redirect_uri=http://www.baidu.com/
+:auth_basic
+
+# code
+:authorization_code = lCMwFg
+
+# using authorization_code exchange access_code
+POST http://127.0.0.1:8080/oauth/token?grant_type=authorization_code&code=:authorization_code&client_id=:client_id&client_secret=:client_secret&scope=read&redirect_uri=http://www.baidu.com/
+:auth_basic_client_id
+
+# grant_type: implicit
+GET http://127.0.0.1:8080/oauth/authorize?response_type=token&client_id=:client_id&client_secret=:client_secret&scope=all&redirect_uri=http://www.baidu.com/
+:auth_basic
