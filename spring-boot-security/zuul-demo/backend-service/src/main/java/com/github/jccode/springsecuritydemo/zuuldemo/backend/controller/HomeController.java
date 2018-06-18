@@ -1,4 +1,4 @@
-package com.github.jccode.springsecuritydemo.oauthguide.resserver.controller;
+package com.github.jccode.springsecuritydemo.zuuldemo.backend.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;

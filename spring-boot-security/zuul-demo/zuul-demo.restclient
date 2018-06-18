@@ -1,0 +1,16 @@
+# Variables
+
+:username := (setq username "user")
+:password := (setq password "912a37fb-ab3d-45b4-b5db-026ecc785a1f")
+
+:auth_basic := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" username password) t))
+
+
+# backend service : direct
+GET http://127.0.0.1:8081/app/guest
+:auth_basic
+
+# backend service : api-gateway
+GET http://127.0.0.1:8080/backend/app/guest
+:auth_basic
+

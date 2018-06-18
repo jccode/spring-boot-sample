@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: auth-center
+server:
+  port: 8079
+logging:
+  level:
+    com.github.jccode: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG

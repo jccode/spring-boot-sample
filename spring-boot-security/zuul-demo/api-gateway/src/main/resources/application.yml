@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: api-gateway
+server:
+  port: 8080
+zuul:
+  routes:
+    auth:
+      path: /auth/**
+      url: http://127.0.0.1:8079
+    backend:
+      path: /backend/**
+      url: http://127.0.0.1:8081
+  sensitive-headers: "" # Cookie,Set-Cookie,Authorization
+logging:
+  level:
+    com.github.jccode: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+#    org.springframework.cloud.netflix: trace
