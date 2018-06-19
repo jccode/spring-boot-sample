@@ -41,6 +41,11 @@
             <artifactId>spring-security-oauth2</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.jccode</groupId>
+            <artifactId>security-common</artifactId>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

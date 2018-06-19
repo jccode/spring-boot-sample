@@ -1,6 +1,8 @@
 package com.github.jccode.springsecuritydemo.zuuldemo.backend.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/app")
 public class HomeController {
 
-    @RequestMapping(value = "/admin")
+    @PreAuthorize("hasRole('admin')")
+    @GetMapping(value = "/admin")
     public String admin() {
         return "admin!";
     }
 
-    @RequestMapping(value = "/user")
+    @GetMapping(value = "/user")
     public String user() {
         return "user!";
     }
@@ -28,7 +31,7 @@ public class HomeController {
         return "guest!";
     }
 
-    @RequestMapping("/me")
+    @GetMapping("/me")
     public Authentication me(Authentication auth) {
         return auth;
     }
