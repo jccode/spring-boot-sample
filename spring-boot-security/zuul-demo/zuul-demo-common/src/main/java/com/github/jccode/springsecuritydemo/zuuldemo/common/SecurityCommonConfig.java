@@ -1,10 +1,11 @@
-package com.github.jccode.springsecuritydemo.zuuldemo.backend.config;
+package com.github.jccode.springsecuritydemo.zuuldemo.common;
 
 import com.allanditzel.springframework.security.web.csrf.CsrfTokenResponseHeaderBindingFilter;
 import com.github.jccode.springsecurity.common.authentication.RESTAuthenticationEntryPoint;
 import com.github.jccode.springsecurity.common.authentication.RESTAuthenticationFailureHandler;
 import com.github.jccode.springsecurity.common.authentication.RESTAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,11 +19,12 @@ import org.springframework.security.web.csrf.CsrfFilter;
  *
  * @author 01372461
  */
+@Order(1000)
 @Configuration
 @EnableWebSecurity
 @EnableGlobalAuthentication
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityCommonConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
