@@ -1,12 +1,7 @@
 package com.github.jccode.springsecuritydemo.zuuldemo.backend;
 
-import org.apache.catalina.filters.RequestDumperFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-
-import javax.servlet.Filter;
 
 /**
  * Application
@@ -20,8 +15,8 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-
     // log
+    /*
     @Bean
     public FilterRegistrationBean requestDumperFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
@@ -30,4 +25,5 @@ public class Application {
         registration.addUrlPatterns("/*");
         return registration;
     }
+    */
 }

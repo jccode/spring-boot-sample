@@ -6,12 +6,12 @@ server:
 zuul:
   routes:
     auth:
-      path: /auth/**
+      path: /uaa/**
       url: http://127.0.0.1:8079
     backend:
       path: /backend/**
       url: http://127.0.0.1:8081
-  sensitive-headers: "" # Cookie,Set-Cookie,Authorization
+  sensitive-headers: # Keep blank value to allow all sensitive headers
 logging:
   level:
     com.github.jccode: DEBUG

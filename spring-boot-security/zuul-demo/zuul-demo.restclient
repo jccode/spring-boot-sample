@@ -1,16 +1,26 @@
 # Variables
 
+:client_id := (setq client_id "webapp")
+:client_secret := (setq client_secret "000000")
+
 :username := (setq username "user")
-:password := (setq password "912a37fb-ab3d-45b4-b5db-026ecc785a1f")
+:password := (setq password "cd0fc8cf-fda1-4386-b08f-dbec1c5db4ad")
+
+:access_token := (setq access_token "f662d565-8306-4108-8a17-c857850e7084")
 
 :auth_basic := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" username password) t))
-
+:auth_bearer := (format "Authorization: Bearer %s" access_token)
 
 # backend service : direct
 GET http://127.0.0.1:8081/app/guest
-:auth_basic
+:auth_bearer
 
 # backend service : api-gateway
 GET http://127.0.0.1:8080/backend/app/guest
-:auth_basic
+:auth_bearer
 
+# grant_type: client credential
+POST http://127.0.0.1:8080/uaa/oauth/token?grant_type=client_credentials&client_id=:client_id&client_secret=:client_secret&scope=read
+
+# grant_type: password
+POST http://127.0.0.1:8080/uaa/oauth/token?grant_type=password&username=:username&password=:password&client_id=:client_id&client_secret=:client_secret&scope=all
