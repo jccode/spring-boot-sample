@@ -8,7 +8,7 @@
 # :username := (setq username "user")
 # :password := (setq password "71b6831a-897e-44d1-8f49-b37584d296c7")
 
-:access_token := (setq access_token "6643d9f3-77d3-4c97-bd84-caae82bd1d16")
+:access_token := (setq access_token "370d0a97-6d1c-4eb5-ac8b-f331b1be4a86")
 
 :auth_basic := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" username password) t))
 :auth_bearer := (format "Authorization: Bearer %s" access_token)
