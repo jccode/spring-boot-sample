@@ -3,12 +3,12 @@
 :client_id := (setq client_id "webapp")
 :client_secret := (setq client_secret "000000")
 
-:username := (setq username "lucy")
-:password := (setq password "lucky")
+:username := (setq username "admin")
+:password := (setq password "admin")
 # :username := (setq username "user")
 # :password := (setq password "71b6831a-897e-44d1-8f49-b37584d296c7")
 
-:access_token := (setq access_token "5553bc21-fd28-48e3-b5f6-1cc7a493d17c")
+:access_token := (setq access_token "6643d9f3-77d3-4c97-bd84-caae82bd1d16")
 
 :auth_basic := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" username password) t))
 :auth_bearer := (format "Authorization: Bearer %s" access_token)
