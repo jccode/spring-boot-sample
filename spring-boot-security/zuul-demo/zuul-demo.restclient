@@ -8,7 +8,7 @@
 # :username := (setq username "user")
 # :password := (setq password "71b6831a-897e-44d1-8f49-b37584d296c7")
 
-:access_token := (setq access_token "370d0a97-6d1c-4eb5-ac8b-f331b1be4a86")
+:access_token := (setq access_token "718b9f61-969d-4b65-bc43-ece4ae5ec20e")
 
 :auth_basic := (format "Authorization: Basic %s" (base64-encode-string (format "%s:%s" username password) t))
 :auth_bearer := (format "Authorization: Bearer %s" access_token)
@@ -45,6 +45,14 @@ GET http://127.0.0.1:8080/backend/book/list
 
 # write book
 GET http://127.0.0.1:8080/backend/book/write
+:auth_bearer
+
+# backend2 me
+GET http://127.0.0.1:8080/backend2/app/me
+:auth_bearer
+
+# backend2 book list
+GET http://127.0.0.1:8080/backend2/app/book-list
 :auth_bearer
 
 # ---------- direct test ----------

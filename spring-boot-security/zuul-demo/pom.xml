@@ -17,6 +17,7 @@
         <module>auth-center</module>
         <module>backend-service</module>
         <module>zuul-demo-common</module>
+        <module>backend2-service</module>
     </modules>
 
     <dependencies>
@@ -47,6 +48,7 @@
             <artifactId>security-common</artifactId>
         </dependency>
 
+
     </dependencies>
 
     <dependencyManagement>
@@ -64,6 +66,7 @@
                 <artifactId>zuul-demo-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

@@ -11,6 +11,9 @@ zuul:
     backend:
       path: /backend/**
       url: http://127.0.0.1:8081
+    backend2:
+      path: /backend2/**
+      url: http://127.0.0.1:8082
   sensitive-headers: # Keep blank value to allow all sensitive headers
 logging:
   level:
