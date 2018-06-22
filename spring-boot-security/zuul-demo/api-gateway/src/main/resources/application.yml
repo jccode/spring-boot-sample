@@ -21,3 +21,6 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
 #    org.springframework.cloud.netflix: trace
+
+oauth2-header-filter:
+  ignore-paths: /uaa/**
