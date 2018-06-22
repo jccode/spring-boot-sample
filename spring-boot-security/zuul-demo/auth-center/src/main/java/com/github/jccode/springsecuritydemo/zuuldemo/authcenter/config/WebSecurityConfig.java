@@ -22,17 +22,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "select username,password,enabled from user where username = ?";
 
     private static final String SQL_roles_by_username =
-            "select u.username, r.NAME from USER u join USER_ROLE ur on ur.USER_ID = u.ID\n" +
-            "  join ROLE r on ur.ROLE_ID = r.ID\n" +
-            "where u.USERNAME = ?";
+            "select u.username, r.name from user u join user_role ur on ur.user_id = u.id\n" +
+            "  join role r on ur.role_id = r.id\n" +
+            "where u.username = ?";
 
     private static final String SQL_role_permissions_by_username =
-            "select r.id, r.NAME, p.NAME from USER u\n" +
-            "  join USER_ROLE ur on ur.USER_ID = u.ID\n" +
-            "  join ROLE r on ur.ROLE_ID = r.id\n" +
-            "  join ROLE_PERMISSION up on ur.ROLE_ID = up.ROLE_ID\n" +
-            "  join PERMISSION p on up.PERMISSION_ID = p.ID\n" +
-            "where u.USERNAME = ?";
+            "select r.id, r.name, p.name from user u\n" +
+            "  join user_role ur on ur.user_id = u.id\n" +
+            "  join role r on ur.role_id = r.id\n" +
+            "  join role_permission up on ur.role_id = up.role_id\n" +
+            "  join permission p on up.permission_id = p.id\n" +
+            "where u.username = ?";
 
 
     @Autowired
