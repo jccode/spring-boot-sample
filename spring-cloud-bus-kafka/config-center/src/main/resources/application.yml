@@ -1,0 +1,29 @@
+spring:
+  # 服务应用名配置
+  application:
+    name: config-center
+  # 服务连接Spring Cloud Config的相关配置
+  cloud:
+    config:
+      server:
+        git:
+          uri: file:///D:/temp/config-repo-git
+          search-paths: '{application}/{profile}'
+    stream:
+      default-binder: kafka
+      kafka:
+        # 来自 KafkaBinderConfigurationProperties
+        binder:
+          brokers: 127.0.0.1:9092
+          zkNodes: 127.0.0.1:2181
+
+# Eureka相关配置
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+server:
+  port: 8888
