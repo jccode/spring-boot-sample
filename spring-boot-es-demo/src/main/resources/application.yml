@@ -1,0 +1,9 @@
+elasticsearch:
+  iplist:
+  - 10.202.107.180
+  - 10.202.107.179
+  - 10.202.107.181
+  port: 9300
+  restPort: 9200
+  pool: 5
+  clusterName: wk_app
