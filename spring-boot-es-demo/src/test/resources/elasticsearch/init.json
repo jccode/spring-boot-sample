@@ -1,0 +1,182 @@
+[
+  {
+    "method": "PUT",
+    "path": "rate_class_index/rate_class_type",
+    "payload": {
+      "settings": {
+        "analysis": { 
+          "analyzer": {
+            "semicolon": {
+              "type": "pattern",
+              "pattern": ";",
+              "lowercase": false
+            }
+          }
+        }
+      },
+
+      "mappings": {
+        
+        "rate_class_type": {
+          "dynamic":false,
+          "dynamic_date_formats":["yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd" ],
+          "properties": {
+            "rateDocNo": {
+              "type": "keyword",
+              "index": true,
+              "store": true
+            },
+            "rateAgreementCode": {
+              "type": "text",
+              "store": true,
+              "index": true
+            },
+            "effectiveStartDate": {
+              "type": "keyword",
+              "store": true
+            },
+            "effectiveEndDate": {
+              "type": "keyword",
+              "store": true
+            },
+            "suitAgtList": {
+              "type": "text",
+              "index": true,
+              "store": true,
+              "analyzer": "semicolon"
+            },
+            "publishDate": {
+              "type": "keyword",
+              "store": true,
+              "index": true
+            },
+            "isEffective": {
+              "type": "keyword",
+              "store": true,
+              "index": true
+            },
+            "issueAirlineCode": {
+              "type": "keyword",
+              "store": true,
+              "index": true
+            },
+            "memo": {
+              "type": "text",
+              "store": true,
+              "index": false
+            },
+            "calcType": {
+              "type": "keyword",
+              "store": true,
+              "index": true
+            },
+            "items": {
+              "type": "nested",
+              "properties": {
+
+                "suitFeeList": {
+                  "type": "text",
+                  "store": true,
+                  "index": true,
+                  "analyzer": "semicolon" 
+                },
+                "suitCarrierList": {
+                  "type": "text",
+                  "store": true,
+                  "index": true,
+                  "analyzer": "semicolon" 
+                },
+                "airFlightType": {
+                  "type": "integer",
+                  "store": true,
+                  "index": true
+                },
+                "suitFlightList": {
+                  "type": "text",
+                  "store": true,
+                  "index": true,
+                  "analyzer": "semicolon" 
+                },
+                "suitDateType": {
+                  "type": "keyword",
+                  "store": true,
+                  "index": true
+                },
+                "suitTimeList": {
+                  "type": "text",
+                  "store": true,
+                  "index": true,
+                  "analyzer": "semicolon" 
+                },
+                "suitProductList": {
+                  "type": "text",
+                  "store": true,
+                  "index": true,
+                  "analyzer":  "semicolon" 
+                },
+                "calcWeightType": {
+                  "type": "keyword",
+                  "store": true,
+                  "index": true
+                },
+                "transfersPointList": {
+                  "type": "text",
+                  "store": true,
+                  "index": true,
+                  "analyzer": "semicolon"
+                },
+                "originAirportList": {
+                  "type": "text",
+                  "store": true,
+                  "index": true,
+                  "analyzer": "semicolon" 
+                },
+                "destAirportList": {
+                  "type": "text",
+                  "store": true,
+                  "index": true,
+                  "analyzer": "semicolon" 
+                },
+                "calcType": {
+                  "type": "keyword",
+                  "store": true,
+                  "index": true
+                },
+                "rate": {
+                  "type": "text",
+                  "store": true,
+                  "index": false
+                },
+                "unit": {
+                  "type": "keyword",
+                  "store": true,
+                  "index": true
+                },
+                "memo": {
+                  "type": "text",
+                  "store": true,
+                  "index": false
+                },
+                "effectiveStartDate": {
+                  "type": "keyword",
+                  "store": true
+                },
+                "effectiveEndDate": {
+                  "type": "keyword",
+                  "store": true
+                },
+                "isEffective": {
+                  "type": "keyword",
+                  "store": true,
+                  "index": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+  
+]

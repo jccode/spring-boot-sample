@@ -30,6 +30,7 @@ public class Application {
         return args -> {
             System.out.println("Hi baby !");
             highLevelApiDemo.demo();
+            System.out.println("--------------------");
             lowLevelApiDemo.demo();
         };
     }
