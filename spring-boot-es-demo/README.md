@@ -43,3 +43,11 @@ Intelij IDEA `Help -> Edit Custom VM Option`, 然后添加上面那一行.
 
 [Reference](https://github.com/elastic/elasticsearch/blob/master/CONTRIBUTING.md ) 
 
+
+elasticsearch-maven-plugin
+--------------------------
+
+这个插件在`maven test`时会启动一个elasticsearch server.
+但这个插件似乎只在你的测试用例继续`ESIntegTestCase`类时,才会启动.
+
+
