@@ -25,6 +25,43 @@ import java.util.stream.Stream;
 
 /**
  * BaseESTest.
+ * 
+ * Basic usage. 
+ * 
+ * <pre>
+ *     class SomeTest extends BaseESTest {
+ *     
+ *         final static String index = randomIndexName();
+ *         final static String type = "your_type";
+ *     
+ *         @Override
+ *         protected String index() {
+ *             return index;
+ *         }
+ *    
+ *         @Override
+ *         protected String type() {
+ *             return type;
+ *         }
+ *    
+ *         @BeforeClass
+ *         public static void beforeClass() throws IOException {
+ *             createIndexWithMapping(index, mapping);
+ *         }
+ *    
+ *         @AfterClass
+ *         public static void afterClass() throws IOException {
+ *             dropIndex(index);
+ *         }
+ *    
+ *         @After
+ *         public void after() throws IOException {
+ *             deleteAllDocs();
+ *         }
+ *
+ *
+ *     }
+ * </pre>
  *
  * It use an external elasticsearch server, and run test on top of it.
  * Do not need to dependent on `elasticsearch-maven-plugin`.
@@ -42,7 +79,7 @@ import java.util.stream.Stream;
  *       - Given can be implement as a function.
  *
  *     After:
- *       - Auto test data of last test case.
+ *       - Auto clear test data of last test case.
  *
  *     AfterClass:
  *       - Close client
