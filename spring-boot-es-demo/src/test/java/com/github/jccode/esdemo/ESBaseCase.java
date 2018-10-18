@@ -18,9 +18,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * BaseESTest.
@@ -61,9 +62,10 @@ public class ESBaseCase extends AbstractTestExecutionListener {
 
     protected static RestClient restClient;
 
-    private static String _index;
+    private String _index;
 
     private static String DEFAULT_TEST_INDEX_PREFIX = "unit_test_index_";
+    private static String DEFAULT_TEST_INDEX_TYPE = "_doc";
 
     private static Random random = new Random();
 
@@ -84,45 +86,69 @@ public class ESBaseCase extends AbstractTestExecutionListener {
         }
     }
 
+    protected static String randomIndexName() {
+        return DEFAULT_TEST_INDEX_PREFIX + RandomStrings.randomAsciiAlphanumOfLength(random, 10).toLowerCase();
+    }
+
     /**
      * Elasticsearch index for test purpose.
      * By default, it will generate a random index name, by the pattern "es_test_index_xxxxxx";
      *
      * @return
      */
-    protected static String index() {
+    protected String index() {
         if (_index == null) {
-            _index = DEFAULT_TEST_INDEX_PREFIX + RandomStrings.randomAsciiAlphanumOfLength(random, 10).toLowerCase();
+            _index = randomIndexName();
         }
         return _index;
     }
 
-    protected static boolean createIndex() throws IOException {
-        Response res = restClient.performRequest("PUT", "/" + index());
+    protected String type() {
+        return DEFAULT_TEST_INDEX_TYPE;
+    }
+
+    protected static boolean createIndex(String index) throws IOException {
+        Response res = restClient.performRequest("PUT", "/" + index);
         return responseIsOk(res);
     }
 
-    protected static boolean dropIndex() throws IOException {
-        Response res = restClient.performRequest("DELETE", "/" + index());
+    protected boolean createIndex() throws IOException {
+        return createIndex(index());
+    }
+
+    protected static boolean dropIndex(String index) throws IOException {
+        Response res = restClient.performRequest("DELETE", "/" + index);
         return responseIsOk(res);
     }
 
-    protected static boolean createMapping(String source) throws IOException {
+    protected boolean dropIndex() throws IOException {
+        return dropIndex(index());
+    }
+
+    protected static boolean createMapping(String index, String source) throws IOException {
         NStringEntity entity = new NStringEntity(source, ContentType.APPLICATION_JSON);
-        Response res = restClient.performRequest("PUT", "/" + index(), Collections.emptyMap(), entity);
+        Response res = restClient.performRequest("PUT", "/" + index, Collections.emptyMap(), entity);
         return responseIsOk(res);
     }
 
-    protected static boolean createIndexWithMapping(String mappingSource) throws IOException {
-        return createMapping(mappingSource);
+    protected boolean createMapping(String source) throws IOException {
+        return createMapping(index(), source);
     }
 
-    protected static Map<String, Object> getMapping() throws IOException {
+    protected static boolean createIndexWithMapping(String index, String mappingSource) throws IOException {
+        return createMapping(index, mappingSource);
+    }
+
+    protected boolean createIndexWithMapping(String mappingSource) throws IOException {
+        return createMapping(index(), mappingSource);
+    }
+
+    protected Map<String, Object> getMapping() throws IOException {
         Response res = restClient.performRequest("GET", "/" + index() + "/_mapping");
         return entityAsMap(res);
     }
 
-    protected static String getMappingAsString() throws IOException {
+    protected String getMappingAsString() throws IOException {
         Response res = restClient.performRequest("GET", "/" + index() + "/_mapping");
         return EntityUtils.toString(res.getEntity());
     }
@@ -148,5 +174,48 @@ public class ESBaseCase extends AbstractTestExecutionListener {
 
     protected static NamedXContentRegistry xContentRegistry() {
         return new NamedXContentRegistry(ClusterModule.getNamedXWriteables());
+    }
+
+    protected String url(String... segments) {
+        List<String> els = new ArrayList<>(Arrays.asList(index(), type()));
+        els.addAll(Arrays.asList(segments));
+        return "/" + String.join("/", els);
+    }
+
+    protected boolean insertDoc(String id, String doc) throws IOException {
+        NStringEntity entity = new NStringEntity(doc, ContentType.APPLICATION_JSON);
+        Response res = restClient.performRequest("PUT", url(id)+"?refresh", Collections.emptyMap(), entity);
+        return res.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED;
+    }
+
+    protected boolean insertDoc(String doc) throws IOException {
+        NStringEntity entity = new NStringEntity(doc, ContentType.APPLICATION_JSON);
+        Response res = restClient.performRequest("POST", url()+"?refresh", Collections.emptyMap(), entity);
+        return res.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED;
+    }
+
+    protected boolean deleteAllDocs() throws IOException {
+        String q = "{\"query\": {\"match_all\": {}}}";
+        NStringEntity entity = new NStringEntity(q, ContentType.APPLICATION_JSON);
+        Response res = restClient.performRequest("POST", url("_delete_by_query")+"?refresh", Collections.emptyMap(), entity);
+        return responseIsOk(res);
+    }
+
+    /**
+     * batch insert. use bulk api.
+     * @param docs
+     * @return
+     */
+    protected boolean givenDocs(String... docs) throws IOException {
+        final AtomicInteger i = new AtomicInteger(0);
+        String bulkSource = Stream.of(docs).map(x -> String.format("%s\n%s", bulkActionAndMetaData(i.incrementAndGet()+""), x.replaceAll("[\r\n]+", " "))).collect(Collectors.joining("\n")) + "\n";
+        //System.out.println(bulkSource);
+        NStringEntity entity = new NStringEntity(bulkSource, ContentType.APPLICATION_JSON);
+        Response res = restClient.performRequest("POST", url("_bulk") + "?refresh", Collections.emptyMap(), entity);
+        return responseIsOk(res);
+    }
+
+    private String bulkActionAndMetaData(String id) {
+        return String.format("{ \"index\" : { \"_index\" : \"%s\", \"_type\" : \"%s\", \"_id\" : \"%s\" } }", index(), type(), id);
     }
 }

@@ -2,6 +2,11 @@ package com.github.jccode.esdemo.it;
 
 import com.github.jccode.esdemo.ESBaseCase;
 import com.github.jccode.esdemo.util.JsonUtils;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,7 +18,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.util.Map;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.elasticsearch.test.hamcrest.ElasticsearchAssertions.*;
 
 /**
  * RateSearchESTest
@@ -43,6 +50,9 @@ public class RateSearchESTest extends ESBaseCase {
       - Delete index
 
     */
+
+    final static String index = randomIndexName();
+    final static String type = "rate_class_type";
 
 
     final static String mapping = "{\n" +
@@ -237,22 +247,30 @@ public class RateSearchESTest extends ESBaseCase {
             "  }\n" +
             "}\n";
 
-    final static String type = "rate_class_type";
+
+    @Override
+    protected String index() {
+        return index;
+    }
+
+    @Override
+    protected String type() {
+        return type;
+    }
 
     @BeforeClass
     public static void beforeClass() throws IOException {
-        createIndexWithMapping(mapping);
+        createIndexWithMapping(index, mapping);
     }
 
     @AfterClass
     public static void afterClass() throws IOException {
-        dropIndex();
+        dropIndex(index);
     }
 
-
-    @Test
-    public void testSimpleMatchAll() throws IOException {
-        assertTrue(true);
+    @After
+    public void after() throws IOException {
+        deleteAllDocs();
     }
 
     @Test
@@ -283,4 +301,261 @@ public class RateSearchESTest extends ESBaseCase {
         // ...
     }
 
+
+    @Test
+    public void testInsertWithId() throws IOException {
+        boolean b = insertDoc("200", "{\n" +
+                "  \"items\": [{\n" +
+                "    \"memo\": \"\",\n" +
+                "    \"calcType\": \"1\",\n" +
+                "    \"destAirportList\": \"PEK\",\n" +
+                "    \"originAirportList\": \"KMG\",\n" +
+                "    \"transfersPointList\": \"\",\n" +
+                "    \"calcWeightType\": \"0\",\n" +
+                "    \"suitProductList\": \"PA001;PA002\",\n" +
+                "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+                "    \"suitDateType\": \"I\",\n" +
+                "    \"suitFlightList\": \"4171\",\n" +
+                "    \"airFlightType\": \"0\",\n" +
+                "    \"suitCarrierList\": \"B001;B002\",\n" +
+                "    \"suitFeeList\": \"F001;F002\",\n" +
+                "    \"effectiveEndDate\": \"20991231\",\n" +
+                "    \"effectiveStartDate\": \"20180927\",\n" +
+                "    \"rate\": \"{\\\"M\\\":\\\"0\\\",\\\"N\\\":\\\"9.6\\\",\\\"45\\\":\\\"2.0\\\",\\\"100\\\":\\\"1.5\\\",\\\"300\\\":\\\"1.0\\\",\\\"500\\\":\\\"0.8\\\"}\",\n" +
+                "    \"unit\": \"CNY\"\n" +
+                "  }, {\n" +
+                "    \"memo\": \"\",\n" +
+                "    \"calcType\": \"1\",\n" +
+                "    \"destAirportList\": \"PEK\",\n" +
+                "    \"originAirportList\": \"KMG\",\n" +
+                "    \"transfersPointList\": \"LXA\",\n" +
+                "    \"calcWeightType\": \"0\",\n" +
+                "    \"suitProductList\": \"ALL\",\n" +
+                "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+                "    \"suitDateType\": \"I\",\n" +
+                "    \"suitFlightList\": \"ALL\",\n" +
+                "    \"airFlightType\": \"0\",\n" +
+                "    \"suitCarrierList\": \"B001;B002\",\n" +
+                "    \"suitFeeList\": \"F001;F002\",\n" +
+                "    \"effectiveEndDate\": \"20991231\",\n" +
+                "    \"effectiveStartDate\": \"20180927\",\n" +
+                "    \"rate\": \"{\\\"B\\\":\\\"8\\\",\\\"M\\\":\\\"50\\\"}\",\n" +
+                "    \"unit\": \"CNY\"\n" +
+                "  }],\n" +
+                "  \"calcType\": \"1\",\n" +
+                "  \"memo\": \"昆明国航-2017.3.26.xls\",\n" +
+                "  \"auditorTime\": \"20180927\",\n" +
+                "  \"auditor\": \"boss\",\n" +
+                "  \"issueAirlineCode\": \"MU\",\n" +
+                "  \"isEffective\": \"1\",\n" +
+                "  \"publishDate\": \"20180927\",\n" +
+                "  \"isPublished\": \"1\",\n" +
+                "  \"suitAgtList\": \"A001;A002;\",\n" +
+                "  \"effectiveStartDate\": \"20180927\",\n" +
+                "  \"effectiveEndDate\": \"20991231\",\n" +
+                "  \"rateDocNo\": \"国货航KMG始发国内直达销售运价201703\",\n" +
+                "  \"rateAgreementCode\": \"KMG2017-R003（D）\"\n" +
+                "}");
+        // System.out.println(b);
+
+        SearchResponse res = searchAll();
+        assertHitCount(res, 1);
+        assertSearchHit(res, 1, hasId("200"));
+    }
+
+    private SearchResponse searchAll() throws IOException {
+        SearchRequest req = new SearchRequest(index());
+        req.types(type());
+        req.source(SearchSourceBuilder.searchSource().query(QueryBuilders.matchAllQuery()));
+        return highLevelClient.search(req);
+    }
+
+    @Test
+    public void testGabc() throws IOException {
+        String s = "{ \"_index\" : \"test\", \"_type\" : \"_doc\", \"_id\" : \"1\" }";
+        String s2 = "{ \"index\" : { \"_index\" : \"test\", \"_type\" : \"_doc\", \"_id\" : \"1\" } }";
+        String s3 = String.format("{ \"create\" : %s }", s);
+        System.out.println(s2);
+        System.out.println(s3);
+        assertEquals(s2, s3);
+    }
+
+    @Test
+    public void testInsert() throws IOException {
+        boolean b = insertDoc("{\n" +
+                "  \"items\": [{\n" +
+                "    \"memo\": \"\",\n" +
+                "    \"calcType\": \"1\",\n" +
+                "    \"destAirportList\": \"PEK\",\n" +
+                "    \"originAirportList\": \"KMG\",\n" +
+                "    \"transfersPointList\": \"\",\n" +
+                "    \"calcWeightType\": \"0\",\n" +
+                "    \"suitProductList\": \"PA001;PA002\",\n" +
+                "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+                "    \"suitDateType\": \"I\",\n" +
+                "    \"suitFlightList\": \"4171\",\n" +
+                "    \"airFlightType\": \"0\",\n" +
+                "    \"suitCarrierList\": \"B001;B002\",\n" +
+                "    \"suitFeeList\": \"F001;F002\",\n" +
+                "    \"effectiveEndDate\": \"20991231\",\n" +
+                "    \"effectiveStartDate\": \"20180927\",\n" +
+                "    \"rate\": \"{\\\"M\\\":\\\"0\\\",\\\"N\\\":\\\"9.6\\\",\\\"45\\\":\\\"2.0\\\",\\\"100\\\":\\\"1.5\\\",\\\"300\\\":\\\"1.0\\\",\\\"500\\\":\\\"0.8\\\"}\",\n" +
+                "    \"unit\": \"CNY\"\n" +
+                "  }, {\n" +
+                "    \"memo\": \"\",\n" +
+                "    \"calcType\": \"1\",\n" +
+                "    \"destAirportList\": \"PEK\",\n" +
+                "    \"originAirportList\": \"KMG\",\n" +
+                "    \"transfersPointList\": \"LXA\",\n" +
+                "    \"calcWeightType\": \"0\",\n" +
+                "    \"suitProductList\": \"ALL\",\n" +
+                "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+                "    \"suitDateType\": \"I\",\n" +
+                "    \"suitFlightList\": \"ALL\",\n" +
+                "    \"airFlightType\": \"0\",\n" +
+                "    \"suitCarrierList\": \"B001;B002\",\n" +
+                "    \"suitFeeList\": \"F001;F002\",\n" +
+                "    \"effectiveEndDate\": \"20991231\",\n" +
+                "    \"effectiveStartDate\": \"20180927\",\n" +
+                "    \"rate\": \"{\\\"B\\\":\\\"8\\\",\\\"M\\\":\\\"50\\\"}\",\n" +
+                "    \"unit\": \"CNY\"\n" +
+                "  }],\n" +
+                "  \"calcType\": \"1\",\n" +
+                "  \"memo\": \"昆明国航-2017.3.26.xls\",\n" +
+                "  \"auditorTime\": \"20180927\",\n" +
+                "  \"auditor\": \"boss\",\n" +
+                "  \"issueAirlineCode\": \"MU\",\n" +
+                "  \"isEffective\": \"1\",\n" +
+                "  \"publishDate\": \"20180927\",\n" +
+                "  \"isPublished\": \"1\",\n" +
+                "  \"suitAgtList\": \"A001;A002;\",\n" +
+                "  \"effectiveStartDate\": \"20180927\",\n" +
+                "  \"effectiveEndDate\": \"20991231\",\n" +
+                "  \"rateDocNo\": \"国货航KMG始发国内直达销售运价201703\",\n" +
+                "  \"rateAgreementCode\": \"KMG2017-R003（D）\"\n" +
+                "}");
+
+        SearchResponse res = searchAll();
+        System.out.println(res);
+        assertHitCount(res, 1);
+
+        // test delete.
+        deleteAllDocs();
+        SearchResponse res2 = searchAll();
+        System.out.println(res2);
+        assertHitCount(res2, 0);
+    }
+
+    @Test
+    public void testBatchInsert() throws IOException {
+        boolean b = givenDocs("{\n" +
+                "  \"items\": [{\n" +
+                "    \"memo\": \"\",\n" +
+                "    \"calcType\": \"1\",\n" +
+                "    \"destAirportList\": \"PEK\",\n" +
+                "    \"originAirportList\": \"KMG\",\n" +
+                "    \"transfersPointList\": \"\",\n" +
+                "    \"calcWeightType\": \"0\",\n" +
+                "    \"suitProductList\": \"PA001;PA002\",\n" +
+                "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+                "    \"suitDateType\": \"I\",\n" +
+                "    \"suitFlightList\": \"4171\",\n" +
+                "    \"airFlightType\": \"0\",\n" +
+                "    \"suitCarrierList\": \"B001;B002\",\n" +
+                "    \"suitFeeList\": \"F001;F002\",\n" +
+                "    \"effectiveEndDate\": \"20991231\",\n" +
+                "    \"effectiveStartDate\": \"20180927\",\n" +
+                "    \"rate\": \"{\\\"M\\\":\\\"0\\\",\\\"N\\\":\\\"9.6\\\",\\\"45\\\":\\\"2.0\\\",\\\"100\\\":\\\"1.5\\\",\\\"300\\\":\\\"1.0\\\",\\\"500\\\":\\\"0.8\\\"}\",\n" +
+                "    \"unit\": \"CNY\"\n" +
+                "  }, {\n" +
+                "    \"memo\": \"\",\n" +
+                "    \"calcType\": \"1\",\n" +
+                "    \"destAirportList\": \"PEK\",\n" +
+                "    \"originAirportList\": \"KMG\",\n" +
+                "    \"transfersPointList\": \"LXA\",\n" +
+                "    \"calcWeightType\": \"0\",\n" +
+                "    \"suitProductList\": \"ALL\",\n" +
+                "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+                "    \"suitDateType\": \"I\",\n" +
+                "    \"suitFlightList\": \"ALL\",\n" +
+                "    \"airFlightType\": \"0\",\n" +
+                "    \"suitCarrierList\": \"B001;B002\",\n" +
+                "    \"suitFeeList\": \"F001;F002\",\n" +
+                "    \"effectiveEndDate\": \"20991231\",\n" +
+                "    \"effectiveStartDate\": \"20180927\",\n" +
+                "    \"rate\": \"{\\\"B\\\":\\\"8\\\",\\\"M\\\":\\\"50\\\"}\",\n" +
+                "    \"unit\": \"CNY\"\n" +
+                "  }],\n" +
+                "  \"calcType\": \"1\",\n" +
+                "  \"memo\": \"昆明国航-2017.3.26.xls\",\n" +
+                "  \"auditorTime\": \"20180927\",\n" +
+                "  \"auditor\": \"boss\",\n" +
+                "  \"issueAirlineCode\": \"MU\",\n" +
+                "  \"isEffective\": \"1\",\n" +
+                "  \"publishDate\": \"20180927\",\n" +
+                "  \"isPublished\": \"1\",\n" +
+                "  \"suitAgtList\": \"A001;A002;\",\n" +
+                "  \"effectiveStartDate\": \"20180927\",\n" +
+                "  \"effectiveEndDate\": \"20991231\",\n" +
+                "  \"rateDocNo\": \"国货航KMG始发国内直达销售运价201703\",\n" +
+                "  \"rateAgreementCode\": \"KMG2017-R003（D）\"\n" +
+                "}"
+                ,
+                "{\n" +
+                "  \"items\": [{\n" +
+                "    \"memo\": \"\",\n" +
+                "    \"calcType\": \"1\",\n" +
+                "    \"destAirportList\": \"PEK\",\n" +
+                "    \"originAirportList\": \"KMG\",\n" +
+                "    \"transfersPointList\": \"\",\n" +
+                "    \"calcWeightType\": \"0\",\n" +
+                "    \"suitProductList\": \"PA001;PA002\",\n" +
+                "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+                "    \"suitDateType\": \"I\",\n" +
+                "    \"suitFlightList\": \"4171\",\n" +
+                "    \"airFlightType\": \"0\",\n" +
+                "    \"suitCarrierList\": \"B001;B002\",\n" +
+                "    \"suitFeeList\": \"F001;F002\",\n" +
+                "    \"effectiveEndDate\": \"20991231\",\n" +
+                "    \"effectiveStartDate\": \"20180927\",\n" +
+                "    \"rate\": \"{\\\"M\\\":\\\"0\\\",\\\"N\\\":\\\"9.6\\\",\\\"45\\\":\\\"2.0\\\",\\\"100\\\":\\\"1.5\\\",\\\"300\\\":\\\"1.0\\\",\\\"500\\\":\\\"0.8\\\"}\",\n" +
+                "    \"unit\": \"CNY\"\n" +
+                "  }, {\n" +
+                "    \"memo\": \"\",\n" +
+                "    \"calcType\": \"1\",\n" +
+                "    \"destAirportList\": \"PEK\",\n" +
+                "    \"originAirportList\": \"KMG\",\n" +
+                "    \"transfersPointList\": \"LXA\",\n" +
+                "    \"calcWeightType\": \"0\",\n" +
+                "    \"suitProductList\": \"ALL\",\n" +
+                "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+                "    \"suitDateType\": \"I\",\n" +
+                "    \"suitFlightList\": \"ALL\",\n" +
+                "    \"airFlightType\": \"0\",\n" +
+                "    \"suitCarrierList\": \"B001;B002\",\n" +
+                "    \"suitFeeList\": \"F001;F002\",\n" +
+                "    \"effectiveEndDate\": \"20991231\",\n" +
+                "    \"effectiveStartDate\": \"20180927\",\n" +
+                "    \"rate\": \"{\\\"B\\\":\\\"8\\\",\\\"M\\\":\\\"50\\\"}\",\n" +
+                "    \"unit\": \"CNY\"\n" +
+                "  }],\n" +
+                "  \"calcType\": \"2\",\n" +
+                "  \"memo\": \"昆明国航-2017.3.28.xls\",\n" +
+                "  \"auditorTime\": \"20180927\",\n" +
+                "  \"auditor\": \"boss\",\n" +
+                "  \"issueAirlineCode\": \"MU\",\n" +
+                "  \"isEffective\": \"1\",\n" +
+                "  \"publishDate\": \"20180927\",\n" +
+                "  \"isPublished\": \"1\",\n" +
+                "  \"suitAgtList\": \"A001;A002;\",\n" +
+                "  \"effectiveStartDate\": \"20180927\",\n" +
+                "  \"effectiveEndDate\": \"20991231\",\n" +
+                "  \"rateDocNo\": \"国货航KMG始发国内直达销售运价201704\",\n" +
+                "  \"rateAgreementCode\": \"KMG2017-R004（D）\"\n" +
+                "}");
+
+        SearchResponse res = searchAll();
+        System.out.println(res);
+        assertHitCount(res, 2);
+    }
 }
