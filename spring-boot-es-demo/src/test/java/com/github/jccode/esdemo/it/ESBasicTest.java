@@ -30,7 +30,7 @@ import static org.elasticsearch.test.hamcrest.ElasticsearchAssertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class RateSearchESTest extends ESBaseCase {
+public class ESBasicTest extends ESBaseCase {
 
     /*
 
