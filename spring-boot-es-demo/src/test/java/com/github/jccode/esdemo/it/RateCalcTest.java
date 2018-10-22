@@ -5,7 +5,12 @@ import com.github.jccode.esdemo.dto.RateCalcQueryDto;
 import com.github.jccode.esdemo.service.ESQueryBuilder;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -16,6 +21,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.Map;
+
+import static org.hamcrest.Matchers.*;
+import static org.elasticsearch.test.hamcrest.ElasticsearchAssertions.*;
+import static org.junit.Assert.*;
 
 /**
  * RateCalcTest
@@ -93,7 +103,7 @@ public class RateCalcTest extends ESBaseCase {
             "    \"calcType\": \"1\",\n" +
             "    \"destAirportList\": \"PEK\",\n" +
             "    \"originAirportList\": \"KMG\",\n" +
-            "    \"transfersPointList\": \"\",\n" +
+            "    \"transfersPointList\": \"SHA\",\n" +
             "    \"calcWeightType\": \"0\",\n" +
             "    \"suitProductList\": \"PB001;PB002\",\n" +
             "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
@@ -163,6 +173,104 @@ public class RateCalcTest extends ESBaseCase {
             "  \"rateAgreementCode\": \"KMG2017-R003（D）\"\n" +
             "}";
 
+    final String data1 = "{\n" +
+            "  \"items\": [{\n" +
+            "    \"id\": \"1011\",\n" +
+            "    \"rateClassId\": \"101\",\n" +
+            "    \"memo\": \"\",\n" +
+            "    \"calcType\": \"1\",\n" +
+            "    \"destAirportList\": \"PEK\",\n" +
+            "    \"originAirportList\": \"KMG\",\n" +
+            "    \"transfersPointList\": \"\",\n" +
+            "    \"calcWeightType\": \"0\",\n" +
+            "    \"suitProductList\": \"PA001;PA002\",\n" +
+            "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+            "    \"suitDateType\": \"I\",\n" +
+            "    \"suitFlightList\": \"4171\",\n" +
+            "    \"airFlightType\": \"0\",\n" +
+            "    \"suitCarrierList\": \"B001;B002\",\n" +
+            "    \"suitFeeList\": \"F001;F002\",\n" +
+            "    \"effectiveEndDate\": \"20991231\",\n" +
+            "    \"effectiveStartDate\": \"20180927\",\n" +
+            "    \"rate\": \"{\\\"M\\\":\\\"0\\\",\\\"N\\\":\\\"9.6\\\",\\\"45\\\":\\\"2.0\\\",\\\"100\\\":\\\"1.5\\\",\\\"300\\\":\\\"1.0\\\",\\\"500\\\":\\\"0.8\\\"}\",\n" +
+            "    \"unit\": \"CNY\"\n" +
+            "  }, {\n" +
+            "    \"id\": \"1012\",\n" +
+            "    \"rateClassId\": \"101\",\n" +
+            "    \"memo\": \"\",\n" +
+            "    \"calcType\": \"1\",\n" +
+            "    \"destAirportList\": \"PEK\",\n" +
+            "    \"originAirportList\": \"KMG\",\n" +
+            "    \"transfersPointList\": \"\",\n" +
+            "    \"calcWeightType\": \"0\",\n" +
+            "    \"suitProductList\": \"PB001;PB002\",\n" +
+            "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+            "    \"suitDateType\": \"I\",\n" +
+            "    \"suitFlightList\": \"4172;4173\",\n" +
+            "    \"airFlightType\": \"0\",\n" +
+            "    \"suitCarrierList\": \"B001;B002\",\n" +
+            "    \"suitFeeList\": \"F001;F002\",\n" +
+            "    \"effectiveEndDate\": \"20991231\",\n" +
+            "    \"effectiveStartDate\": \"20180927\",\n" +
+            "    \"rate\": \"{\\\"M\\\":\\\"0\\\",\\\"N\\\":\\\"9.2\\\",\\\"45\\\":\\\"1.8\\\",\\\"100\\\":\\\"1.5\\\",\\\"300\\\":\\\"1.0\\\",\\\"500\\\":\\\"0.8\\\"}\",\n" +
+            "    \"unit\": \"CNY\"\n" +
+            "  }, {\n" +
+            "    \"id\": \"1013\",\n" +
+            "    \"rateClassId\": \"101\",\n" +
+            "    \"memo\": \"\",\n" +
+            "    \"calcType\": \"1\",\n" +
+            "    \"destAirportList\": \"PEK\",\n" +
+            "    \"originAirportList\": \"KMG\",\n" +
+            "    \"transfersPointList\": \"LXA\",\n" +
+            "    \"calcWeightType\": \"0\",\n" +
+            "    \"suitProductList\": \"PA001;PA002;PB001;PB002\",\n" +
+            "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+            "    \"suitDateType\": \"I\",\n" +
+            "    \"suitFlightList\": \"4172;4173\",\n" +
+            "    \"airFlightType\": \"0\",\n" +
+            "    \"suitCarrierList\": \"B001;B002\",\n" +
+            "    \"suitFeeList\": \"F001;F002\",\n" +
+            "    \"effectiveEndDate\": \"20991231\",\n" +
+            "    \"effectiveStartDate\": \"20180927\",\n" +
+            "    \"rate\": \"{\\\"A\\\":\\\"50\\\"}\",\n" +
+            "    \"unit\": \"CNY\"\n" +
+            "  }, {\n" +
+            "    \"id\": \"1014\",\n" +
+            "    \"rateClassId\": \"101\",\n" +
+            "    \"memo\": \"\",\n" +
+            "    \"calcType\": \"1\",\n" +
+            "    \"destAirportList\": \"PEK\",\n" +
+            "    \"originAirportList\": \"KMG\",\n" +
+            "    \"transfersPointList\": \"LXA\",\n" +
+            "    \"calcWeightType\": \"0\",\n" +
+            "    \"suitProductList\": \"PA001\",\n" +
+            "    \"suitTimeList\": \"20180927;20180928;20180929;20180930\",\n" +
+            "    \"suitDateType\": \"I\",\n" +
+            "    \"suitFlightList\": \"4174\",\n" +
+            "    \"airFlightType\": \"0\",\n" +
+            "    \"suitCarrierList\": \"B001;B002\",\n" +
+            "    \"suitFeeList\": \"F001;F002\",\n" +
+            "    \"effectiveEndDate\": \"20991231\",\n" +
+            "    \"effectiveStartDate\": \"20180927\",\n" +
+            "    \"rate\": \"{\\\"B\\\":\\\"8\\\",\\\"M\\\":\\\"50\\\"}\",\n" +
+            "    \"unit\": \"CNY\"\n" +
+            "  }],\n" +
+            "  \"id\": \"101\",\n" +
+            "  \"calcType\": \"1\",\n" +
+            "  \"memo\": \"昆明国航-2017.3.26.xls\",\n" +
+            "  \"auditorTime\": \"20180927\",\n" +
+            "  \"auditor\": \"boss\",\n" +
+            "  \"issueAirlineCode\": \"MU\",\n" +
+            "  \"isEffective\": \"1\",\n" +
+            "  \"publishDate\": \"20180927\",\n" +
+            "  \"isPublished\": \"1\",\n" +
+            "  \"suitAgtList\": \"A001;A004\",\n" +
+            "  \"effectiveStartDate\": \"20180927\",\n" +
+            "  \"effectiveEndDate\": \"20991231\",\n" +
+            "  \"rateDocNo\": \"国货航KMG始发国内直达销售运价201703\",\n" +
+            "  \"rateAgreementCode\": \"KMG2017-R003（D）\"\n" +
+            "}";
+
     @Override
     protected String index() {
         return index;
@@ -217,13 +325,124 @@ public class RateCalcTest extends ESBaseCase {
         return res;
     }
 
+    private SearchHits innerHits(SearchResponse res) {
+        return res.getHits().getHits()[0].getInnerHits().get("items");
+    }
+
+    private void assertInnerHitsFirstHasId(SearchResponse res, String id) {
+        assertHitsCount(res, greaterThan(0));
+        SearchHits innerHits = innerHits(res);
+        float innerMaxScore = innerHits.getMaxScore();
+        SearchHit[] innerHitsArr = innerHits.getHits();
+        assertThat(innerHitsArr.length, greaterThan(0));
+        assertThat(innerHitsArr[0].getScore(), is(innerMaxScore));
+        Map<String, Object> i0 = innerHitsArr[0].getSourceAsMap();
+        assertThat(i0.get("id"), is(id));
+    }
 
     @Test
-    public void test_P1_gt_P2() throws IOException {
+    public void test_P1_gt_P2_in_single_doc() throws IOException {
         givenDocs(data0);
 
-        // Assert P1 > P2.  (C1, C2, C3) > (C1, C2, _)
-        SearchResponse res = search(ESQueryBuilder.ratePriorityQuery(param("A001", "LXA", "4171")));
+        // Assert P1 > P2.  (C1, C2, C3) > (C1, C2, _)  | sp(4172) > ALL
+        SearchResponse res = search(ESQueryBuilder.ratePriorityQuery(param("A001", "LXA", "4172")));
+        assertInnerHitsFirstHasId(res, "1003");  // 1003 > 1004
 
+
+        // Assert P1 > P2.  (C1, C2, C3) > (C1, C2, _)  | ALL > _
+        SearchResponse res2 = search(ESQueryBuilder.ratePriorityQuery(param("A001", "LXA", "4171")));
+        assertInnerHitsFirstHasId(res2, "1004");   // 1004 > 1003
+    }
+
+    @Test
+    public void test_P1_gt_P2_across_docs() throws IOException {
+        givenDocs(data0, data1);
+
+        // Assert P1 > P2. (C1, C2, C3) > (C1, C2, _)   | sp(4174) > ALL > _
+        SearchResponse res = search(ESQueryBuilder.ratePriorityQuery(param("A001", "LXA", "4174")));
+        assertInnerHitsFirstHasId(res, "1014");   // 1014 > 1003|1004
+
+        // Assert P1 > P2. (C1, C2, C3) > (C1, C2, _)   | ALL > _
+        SearchResponse res2 = search(ESQueryBuilder.ratePriorityQuery(param("A001", "LXA", "4175")));
+        assertInnerHitsFirstHasId(res2, "1004");
+    }
+
+    @Test
+    public void test_P2_gt_P3_in_single_doc() throws IOException {
+        givenDocs(data1);
+
+        // Assert P2 > P3. (C1, C2, _) > (C1, _, C2)
+        SearchResponse res = search(ESQueryBuilder.ratePriorityQuery(param("A001", "LXA", "4171")));
+        System.out.println(res);
+        // expect: 1013, 1014 has same score(top score)
+
+        assertHitsCount(res, greaterThan(1));
+        SearchHits items = innerHits(res);
+        float innerMaxScore = items.getMaxScore();
+        SearchHit[] hitsArr = items.getHits();
+
+        assertThat(hitsArr[0].getScore(), is(innerMaxScore));
+        assertThat(hitsArr[1].getScore(), is(innerMaxScore));
+
+        Map<String, Object> i0 = hitsArr[0].getSourceAsMap();
+        Map<String, Object> i1 = hitsArr[1].getSourceAsMap();
+        assertThat(i0.get("id"), isIn(new String[]{"1013", "1014"}));
+        assertThat(i1.get("id"), isIn(new String[]{"1013", "1014"}));
+    }
+
+    @Test
+    public void test_P3_gt_P4_in_single_doc() throws IOException {
+        givenDocs(data1);
+
+        // Assert P3 > P4.   (C1, _, C2) > (C1, _, _)
+        SearchResponse res = search(ESQueryBuilder.ratePriorityQuery(param("A001", "CAN", "4174")));
+        assertInnerHitsFirstHasId(res, "1014");  // 1014 > 1011
+    }
+
+    @Test
+    public void test_P4_gt_P5_cross_docs() throws IOException {
+        givenDocs(data0, data1);
+
+        // Assert P4 > P5.    (C1, _, _) > (_, C2, C3)
+        SearchResponse res = search(ESQueryBuilder.ratePriorityQuery(param("A004", "SHA", "4175")));
+        // expect items of 101 (1011,1012,1013,1014) > 1002
+
+        assertHitsCount(res, greaterThan(4));
+        SearchHits items = innerHits(res);
+        float innerMaxScore = items.getMaxScore();
+        SearchHit[] hitsArr = items.getHits();
+
+        assertThat(hitsArr[0].getScore(), is(innerMaxScore));
+        assertThat(hitsArr[1].getScore(), is(innerMaxScore));
+        assertThat(hitsArr[2].getScore(), is(innerMaxScore));
+        assertThat(hitsArr[3].getScore(), is(innerMaxScore));
+
+        Map<String, Object> i0 = hitsArr[0].getSourceAsMap();
+        Map<String, Object> i1 = hitsArr[1].getSourceAsMap();
+        Map<String, Object> i2 = hitsArr[2].getSourceAsMap();
+        Map<String, Object> i3 = hitsArr[3].getSourceAsMap();
+
+        assertThat(i0.get("id"), isIn(new String[]{"1011", "1012", "1013", "1014"}));
+        assertThat(i1.get("id"), isIn(new String[]{"1011", "1012", "1013", "1014"}));
+        assertThat(i2.get("id"), isIn(new String[]{"1011", "1012", "1013", "1014"}));
+        assertThat(i3.get("id"), isIn(new String[]{"1011", "1012", "1013", "1014"}));
+    }
+
+    @Test
+    public void test_P5_gt_P6_in_single_doc() throws IOException {
+        givenDocs(data1);
+
+        // Assert P5 > P6.    (_ , C2, C3) > (_, C2, _)
+        SearchResponse res = search(ESQueryBuilder.ratePriorityQuery(param("A005", "LXA", "4174")));
+        assertInnerHitsFirstHasId(res, "1014");  // 1014 > 1013
+    }
+
+    @Test
+    public void test_P6_gt_P7_in_single_doc() throws IOException {
+        givenDocs(data1);
+
+        // Assert P6 > P7.   (_, C2, _) > (_, _, C3)
+        SearchResponse res = search(ESQueryBuilder.ratePriorityQuery(param("A005", "LXA", "4171")));
+        assertInnerHitsFirstHasId(res, "1014");  // 1014 > 1011
     }
 }

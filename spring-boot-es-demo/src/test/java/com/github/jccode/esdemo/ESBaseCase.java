@@ -5,11 +5,13 @@ import org.apache.http.HttpStatus;
 import org.apache.http.entity.ContentType;
 import org.apache.http.nio.entity.NStringEntity;
 import org.apache.http.util.EntityUtils;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.cluster.ClusterModule;
 import org.elasticsearch.common.xcontent.*;
+import org.hamcrest.Matcher;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestExecutionListeners;
@@ -254,5 +256,12 @@ public class ESBaseCase extends AbstractTestExecutionListener {
 
     private String bulkActionAndMetaData(String id) {
         return String.format("{ \"index\" : { \"_index\" : \"%s\", \"_type\" : \"%s\", \"_id\" : \"%s\" } }", index(), type(), id);
+    }
+
+
+    // Assertions, matchers
+
+    protected void assertHitsCount(SearchResponse res, Matcher<Integer> matcher) {
+        matcher.matches(res.getHits().getHits().length);
     }
 }
