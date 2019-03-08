@@ -3,7 +3,6 @@ package com.github.jccode.springcloud.integrateddemo.order.service;
 import com.github.jccode.springbootsample.core.data.rest.RestResult;
 import com.github.jccode.springbootsample.core.repo.CrudMapper;
 import com.github.jccode.springbootsample.core.service.CrudServiceImpl;
-import com.github.jccode.springbootsample.core.utils.CommonUtil;
 import com.github.jccode.springcloud.integrateddemo.account.api.AccountAPI;
 import com.github.jccode.springcloud.integrateddemo.order.constant.OrderStatus;
 import com.github.jccode.springcloud.integrateddemo.order.form.OrderForm;
@@ -12,13 +11,11 @@ import com.github.jccode.springcloud.integrateddemo.order.model.Order;
 import com.github.jccode.springcloud.integrateddemo.order.repo.OrderItemMapper;
 import com.github.jccode.springcloud.integrateddemo.order.repo.OrderMapper;
 import com.github.jccode.springcloud.integrateddemo.user.api.UserAPI;
-import com.github.jccode.springcloud.integrateddemo.user.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import static com.github.jccode.springbootsample.core.utils.CommonUtil.fault;
