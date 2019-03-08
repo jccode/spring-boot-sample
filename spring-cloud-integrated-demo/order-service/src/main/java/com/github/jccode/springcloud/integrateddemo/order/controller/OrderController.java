@@ -20,6 +20,15 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+
+    /**
+     * 下单;
+     *
+     * curl -XPOST -d "userId=1&address=LianhuaRoad&items[0].productId=3&items[0].amount=100"
+     *
+     * @param orderForm
+     * @return
+     */
     @PostMapping("/reserve")
     public RestResult reserveOrder(@Valid OrderForm orderForm, BindingResult result) {
         checkResult(result);

@@ -28,4 +28,12 @@ public class OrderItemForm {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "OrderItemForm{" +
+                "productId=" + productId +
+                ", amount=" + amount +
+                '}';
+    }
 }

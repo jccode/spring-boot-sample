@@ -40,4 +40,13 @@ public class OrderForm {
     public void setItems(List<OrderItemForm> items) {
         this.items = items;
     }
+
+    @Override
+    public String toString() {
+        return "OrderForm{" +
+                "userId=" + userId +
+                ", address='" + address + '\'' +
+                ", items=" + items +
+                '}';
+    }
 }
