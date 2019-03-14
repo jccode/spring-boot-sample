@@ -17,8 +17,6 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 
-import javax.annotation.PostConstruct;
-
 @Configuration
 public class SchedulerConfig {
 
