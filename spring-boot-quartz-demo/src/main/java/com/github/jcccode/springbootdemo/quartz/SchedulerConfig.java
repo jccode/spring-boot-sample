@@ -1,5 +1,6 @@
 package com.github.jcccode.springbootdemo.quartz;
 
+import com.github.jcccode.springbootdemo.quartz.instrument.TraceQuartzListener;
 import com.github.jcccode.springbootdemo.quartz.job.SampleJob;
 import com.github.jcccode.springbootdemo.quartz.spring.AutowiringSpringBeanJobFactory;
 import org.quartz.JobDetail;
@@ -30,10 +31,10 @@ public class SchedulerConfig {
     public SchedulerFactoryBean scheduler(Trigger trigger, JobDetail job) {
         SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
         schedulerFactory.setConfigLocation(new ClassPathResource("quartz.properties"));
-
         schedulerFactory.setJobFactory(springBeanJobFactory());
         schedulerFactory.setJobDetails(job);
         schedulerFactory.setTriggers(trigger);
+        //schedulerFactory.setGlobalJobListeners(new TraceQuartzListener()); // listeners
         return schedulerFactory;
     }
 
@@ -49,7 +50,6 @@ public class SchedulerConfig {
 
     @Bean
     public JobDetailFactoryBean jobDetail() {
-
         JobDetailFactoryBean jobDetailFactory = new JobDetailFactoryBean();
         jobDetailFactory.setJobClass(SampleJob.class);
         jobDetailFactory.setName("Qrtz_Job_Detail");
@@ -64,7 +64,7 @@ public class SchedulerConfig {
         SimpleTriggerFactoryBean trigger = new SimpleTriggerFactoryBean();
         trigger.setJobDetail(job);
 
-        int frequencyInSec = 5;
+        int frequencyInSec = 3;
         log.info("Configuring trigger to fire every {} seconds", frequencyInSec);
         trigger.setRepeatInterval(frequencyInSec * 1000);
         trigger.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
